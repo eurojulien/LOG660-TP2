@@ -1,3 +1,11 @@
+package controlleur;
+
+import modele.Exemplaire;
+import modele.Film;
+import modele.Forfait;
+import modele.Genre;
+import modele.Personne;
+import modele.Utilisateur;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.service.ServiceRegistry;

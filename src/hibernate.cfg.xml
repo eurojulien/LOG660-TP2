@@ -12,16 +12,16 @@
         <property name="hibernate.default_schema">EQUIPE17</property>
         <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
-        <mapping resource="Locationfilm.hbm.xml" />
-        <mapping resource="Film.hbm.xml" />
-        <mapping resource="Personne.hbm.xml" />
-        <mapping resource="Typepersonne.hbm.xml" />
-        <mapping resource="Exemplaire.hbm.xml" />
-        <mapping resource="Forfait.hbm.xml" />
-        <mapping resource="Genre.hbm.xml" />
-        <mapping resource="Utilisateur.hbm.xml" />
-        <mapping resource="Implication.hbm.xml" />
-        <mapping resource="Annonce.hbm.xml" />
-        <mapping resource="Pays.hbm.xml" />
+        <mapping resource="modele/Locationfilm.hbm.xml" />
+        <mapping resource="modele/Film.hbm.xml" />
+        <mapping resource="modele/Personne.hbm.xml" />
+        <mapping resource="modele/Typepersonne.hbm.xml" />
+        <mapping resource="modele/Exemplaire.hbm.xml" />
+        <mapping resource="modele/Forfait.hbm.xml" />
+        <mapping resource="modele/Genre.hbm.xml" />
+        <mapping resource="modele/Utilisateur.hbm.xml" />
+        <mapping resource="modele/Implication.hbm.xml" />
+        <mapping resource="modele/Annonce.hbm.xml" />
+        <mapping resource="modele/Pays.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
