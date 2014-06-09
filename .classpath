@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/cglib-full-2.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/dom4j-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/ehcache-0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/hibernate2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/jta.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/jtds-0.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/julien/workspace/LOG660 - TP2/odmg-3.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

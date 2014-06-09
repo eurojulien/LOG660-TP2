@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-06-09 11:13:02 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="Annonce" table="ANNONCE">
+        <id name="idannonce" type="big_decimal">
+            <column name="IDANNONCE" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="film" class="Film" fetch="select">
+            <column name="IDFILM" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="announce" type="string">
+            <column name="ANNOUNCE" length="500" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

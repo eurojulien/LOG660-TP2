@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-06-09 11:13:02 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="Utilisateur" table="UTILISATEUR">
+        <id name="idutilisateur" type="big_decimal">
+            <column name="IDUTILISATEUR" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="forfait" class="Forfait" fetch="select">
+            <column name="IDFORFAIT" precision="1" scale="0" />
+        </many-to-one>
+        <property name="nomfamille" type="string">
+            <column name="NOMFAMILLE" length="50" not-null="true" />
+        </property>
+        <property name="prenom" type="string">
+            <column name="PRENOM" length="50" not-null="true" />
+        </property>
+        <property name="utilisateurtype" type="string">
+            <column name="UTILISATEURTYPE" length="50" not-null="true" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="TELEPHONE" length="50" not-null="true" />
+        </property>
+        <property name="courriel" type="string">
+            <column name="COURRIEL" length="50" not-null="true" unique="true" />
+        </property>
+        <property name="numerocivique" type="big_decimal">
+            <column name="NUMEROCIVIQUE" precision="38" scale="0" not-null="true" />
+        </property>
+        <property name="rue" type="string">
+            <column name="RUE" length="50" not-null="true" />
+        </property>
+        <property name="ville" type="string">
+            <column name="VILLE" length="50" not-null="true" />
+        </property>
+        <property name="province" type="string">
+            <column name="PROVINCE" length="50" not-null="true" />
+        </property>
+        <property name="codepostal" type="string">
+            <column name="CODEPOSTAL" length="7" not-null="true" />
+        </property>
+        <property name="datenaissance" type="date">
+            <column name="DATENAISSANCE" length="7" not-null="true" />
+        </property>
+        <property name="identificateur" type="string">
+            <column name="IDENTIFICATEUR" length="50" not-null="true" />
+        </property>
+        <property name="motdepasse" type="string">
+            <column name="MOTDEPASSE" length="50" not-null="true" />
+        </property>
+        <property name="cartecredittype" type="string">
+            <column name="CARTECREDITTYPE" length="50" />
+        </property>
+        <property name="cartecreditnumero" type="java.lang.Long">
+            <column name="CARTECREDITNUMERO" precision="16" scale="0" />
+        </property>
+        <property name="cartecreditdateexp" type="date">
+            <column name="CARTECREDITDATEEXP" length="7" />
+        </property>
+        <property name="cartecreditcvv" type="java.lang.Short">
+            <column name="CARTECREDITCVV" precision="3" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

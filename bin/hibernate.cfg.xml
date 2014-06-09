@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.password">YUdIaB7s</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@big-data-3.logti.etsmtl.ca:1521:LOG660</property>
+        <property name="hibernate.connection.username">equipe17</property>
+        <property name="hibernate.default_schema">EQUIPE17</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+        <property name="hibernate.search.autoregister_listeners">false</property>
+        <mapping resource="Locationfilm.hbm.xml" />
+        <mapping resource="Film.hbm.xml" />
+        <mapping resource="Personne.hbm.xml" />
+        <mapping resource="Typepersonne.hbm.xml" />
+        <mapping resource="Exemplaire.hbm.xml" />
+        <mapping resource="Forfait.hbm.xml" />
+        <mapping resource="Genre.hbm.xml" />
+        <mapping resource="Utilisateur.hbm.xml" />
+        <mapping resource="Implication.hbm.xml" />
+        <mapping resource="Annonce.hbm.xml" />
+        <mapping resource="Pays.hbm.xml" />
+    </session-factory>
+</hibernate-configuration>

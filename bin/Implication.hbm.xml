@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-06-09 11:13:02 by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="Implication" table="IMPLICATION">
+        <composite-id name="id" class="ImplicationId">
+            <key-property name="idfilm" type="big_decimal">
+                <column name="IDFILM" precision="38" scale="0" />
+            </key-property>
+            <key-property name="idpersonne" type="big_decimal">
+                <column name="IDPERSONNE" precision="38" scale="0" />
+            </key-property>
+            <key-property name="idtypepersonne" type="big_decimal">
+                <column name="IDTYPEPERSONNE" precision="38" scale="0" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="typepersonne" class="Typepersonne" update="false" insert="false" fetch="select">
+            <column name="IDTYPEPERSONNE" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="personne" class="Personne" update="false" insert="false" fetch="select">
+            <column name="IDPERSONNE" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="film" class="Film" update="false" insert="false" fetch="select">
+            <column name="IDFILM" precision="38" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="personnage" type="string">
+            <column name="PERSONNAGE" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>
