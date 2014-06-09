@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+import controlleur.Facade;
+import modele.Utilisateur;
+
 
 
 
@@ -10,9 +13,13 @@ public class MainClass {
 
 		Facade facade = Facade.getFacade();
 		
+		Utilisateur user = facade.getUser("AurelioJSmith60@gmail.com", "mew2Veifo");
+		
+		System.out.println("user : " + user.getNomfamille());
+		
 		//System.out.println(facade.getForfait("1").toString());
 		// Insertion usager
-		facade.addUser(	"1001",
+		/*facade.addUser(	"1001",
 						"Julien",
 						"LeGamin",
 						"employe",

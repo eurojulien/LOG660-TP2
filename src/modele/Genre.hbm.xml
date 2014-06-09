@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 9, 2014 4:05:17 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="modele.Genre" table="GENRE">
+        <id name="idgenre" type="big_decimal">
+            <column name="IDGENRE" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="libellegenre" type="string">
+            <column name="LIBELLEGENRE" length="50" not-null="true" />
+        </property>
+        <set name="films" table="FILMGENRE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDGENRE" precision="38" scale="0" not-null="true" />
+            </key>
+            <many-to-many entity-name="modele.Film">
+                <column name="IDFILM" precision="38" scale="0" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

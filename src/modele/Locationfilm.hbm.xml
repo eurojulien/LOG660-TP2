@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 9, 2014 4:05:17 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="modele.Locationfilm" table="LOCATIONFILM">
+        <composite-id name="id" class="modele.LocationfilmId">
+            <key-property name="idutilisateur" type="big_decimal">
+                <column name="IDUTILISATEUR" precision="38" scale="0" />
+            </key-property>
+            <key-property name="idexemplaire" type="big_decimal">
+                <column name="IDEXEMPLAIRE" precision="38" scale="0" />
+            </key-property>
+        </composite-id>
+        <property name="datedelocation" type="date">
+            <column name="DATEDELOCATION" length="7" not-null="true" />
+        </property>
+        <property name="datederetour" type="date">
+            <column name="DATEDERETOUR" length="7" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
