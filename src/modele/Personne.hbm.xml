@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 9, 2014 4:05:17 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="modele.Personne" table="PERSONNE">
+        <id name="idpersonne" type="big_decimal">
+            <column name="IDPERSONNE" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="nom" type="string">
+            <column name="NOM" length="50" not-null="true" />
+        </property>
+        <property name="prenom" type="string">
+            <column name="PRENOM" length="50" />
+        </property>
+        <property name="datedenaissance" type="date">
+            <column name="DATEDENAISSANCE" length="7" />
+        </property>
+        <property name="lieudenaissance" type="string">
+            <column name="LIEUDENAISSANCE" length="100" />
+        </property>
+        <property name="biographie" type="string">
+            <column name="BIOGRAPHIE" length="0" />
+        </property>
+        <property name="photo" type="string">
+            <column name="PHOTO" length="400" />
+        </property>
+        <set name="implications" table="IMPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDPERSONNE" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="modele.Implication" />
+        </set>
+    </class>
+</hibernate-mapping>

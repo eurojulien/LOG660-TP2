@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 9, 2014 4:05:17 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="modele.Forfait" table="FORFAIT">
+        <id name="idforfait" type="boolean">
+            <column name="IDFORFAIT" precision="1" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="nom" type="string">
+            <column name="NOM" length="50" not-null="true" />
+        </property>
+        <property name="coutforfait" type="big_decimal">
+            <column name="COUTFORFAIT" precision="10" not-null="true" />
+        </property>
+        <property name="locationmax" type="big_decimal">
+            <column name="LOCATIONMAX" precision="38" scale="0" not-null="true" />
+        </property>
+        <property name="dureemax" type="big_decimal">
+            <column name="DUREEMAX" precision="38" scale="0" not-null="true" />
+        </property>
+        <set name="utilisateurs" table="UTILISATEUR" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDFORFAIT" precision="1" scale="0" />
+            </key>
+            <one-to-many class="modele.Utilisateur" />
+        </set>
+    </class>
+</hibernate-mapping>

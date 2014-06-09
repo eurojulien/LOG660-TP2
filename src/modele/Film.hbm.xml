@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 9, 2014 4:05:17 PM by Hibernate Tools 4.0.0 -->
+<hibernate-mapping>
+    <class name="modele.Film" table="FILM">
+        <id name="idfilm" type="big_decimal">
+            <column name="IDFILM" precision="38" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="titre" type="string">
+            <column name="TITRE" length="100" not-null="true" />
+        </property>
+        <property name="anneesortie" type="short">
+            <column name="ANNEESORTIE" precision="4" scale="0" not-null="true" />
+        </property>
+        <property name="langue" type="string">
+            <column name="LANGUE" length="50" />
+        </property>
+        <property name="duree" type="big_decimal">
+            <column name="DUREE" precision="38" scale="0" not-null="true" />
+        </property>
+        <property name="resume" type="string">
+            <column name="RESUME" length="500" not-null="true" />
+        </property>
+        <property name="image" type="string">
+            <column name="IMAGE" length="400" />
+        </property>
+        <set name="payses" table="FILMPAYS" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="IDFILM" precision="38" scale="0" not-null="true" />
+            </key>
+            <many-to-many entity-name="modele.Pays">
+                <column name="IDPAYS" precision="38" scale="0" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="genres" table="FILMGENRE" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="IDFILM" precision="38" scale="0" not-null="true" />
+            </key>
+            <many-to-many entity-name="modele.Genre">
+                <column name="IDGENRE" precision="38" scale="0" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="annonces" table="ANNONCE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDFILM" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="modele.Annonce" />
+        </set>
+        <set name="implications" table="IMPLICATION" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDFILM" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="modele.Implication" />
+        </set>
+        <set name="exemplaires" table="EXEMPLAIRE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDFILM" precision="38" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="modele.Exemplaire" />
+        </set>
+    </class>
+</hibernate-mapping>

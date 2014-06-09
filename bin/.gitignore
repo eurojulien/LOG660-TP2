@@ -1,3 +1,14 @@
 /vue
 /modele
 /controlleur
+/Annonce.hbm.xml
+/Exemplaire.hbm.xml
+/Film.hbm.xml
+/Forfait.hbm.xml
+/Genre.hbm.xml
+/Implication.hbm.xml
+/Locationfilm.hbm.xml
+/Pays.hbm.xml
+/Personne.hbm.xml
+/Typepersonne.hbm.xml
+/Utilisateur.hbm.xml

@@ -238,6 +238,36 @@ public class Facade<T> {
 		return film;
 	}
 	
+	public ArrayList<Film> getFilms(String... parameters){
+
+		ArrayList<Film> films = null;
+		
+		try{
+			beginTransaction();
+			Query query = session.createQuery(	"from Film where " +
+												"titre like :title and " +
+												"anneesortie >= :beginDate and " + 
+												"anneesortie <= :endDate ");
+			
+			// pays, genre, nom realisateur, nom acteur
+			
+			if(parameters.length >= 1 ) query.setParameter("titre", parameters[0]);
+			if(parameters.length >= 2 ) query.setParameter("beginDate", parameters[1]);
+			if(parameters.length >= 3 ) query.setParameter("endDate", parameters[2]);
+			
+			films = (ArrayList<Film>) query.list();
+		}
+		catch(HibernateException e){
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		
+		finally{
+			endTransaction();
+		}
+		
+		return films;
+	}
 	// Accesseurs de liste ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
 	/*
