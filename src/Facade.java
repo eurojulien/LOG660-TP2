@@ -182,8 +182,29 @@ public class Facade<T> {
 		}
 	}
 	
-	public Utilisateur identifyUser(String login, String password){
+	public Utilisateur getUser(String login, String password){
 		
+		Utilisateur utilisateur = null;
+		
+		try{
+			beginTransaction();
+			Query query = session.createQuery("from Utilisateur where identificateur = :login and motdepasse = :password");
+			query.setParameter("login", login);
+			query.setParameter("password", password);
+			
+			utilisateur = (Utilisateur) query.uniqueResult();
+		}
+		
+		catch(HibernateException e){
+			transaction.rollback();
+			e.printStackTrace();
+		}
+		
+		finally{
+			endTransaction();
+		}
+		
+		return utilisateur;
 	}
 	
 	public Film getFilm(String id){
