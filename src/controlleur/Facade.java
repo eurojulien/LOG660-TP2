@@ -1,11 +1,6 @@
 package controlleur;
 
-import modele.Exemplaire;
-import modele.Film;
-import modele.Forfait;
-import modele.Genre;
-import modele.Personne;
-import modele.Utilisateur;
+import modele.*;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.service.ServiceRegistry;
@@ -21,9 +16,11 @@ import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
 import java.math.BigDecimal;
 
 public class Facade<T> {
@@ -46,11 +43,11 @@ public class Facade<T> {
 		}
 
 		catch(Throwable ex){
-			System.err.println("L'initialisation de SessionFactory a echouee : " + ex);
+			System.err.println("L'initialisation de SessionFactory a echouee ...");
 			System.err.println("MESSAGE : " + ex.getMessage());
 			System.err.println("CAUSE   : " + ex.getCause());
-			System.err.println("TEST    : " + ex.getStackTrace());
 		}
+		
 		session		= null;
 		transaction	= null;
 	}
@@ -71,6 +68,9 @@ public class Facade<T> {
 		transaction = null;
 	}
 	
+	/*
+	 * Singleton concept
+	 */
 	public static Facade getFacade(){
 		
 		if(facade == null){
@@ -81,179 +81,138 @@ public class Facade<T> {
 	}
 	
 	/*
-	 * Ajoute un forfait
-	 * 
-	 * String idForfait
-	 * String nom
-	 * BigDecimal coutForfait
-	 * BigDecimal locationMax
-	 * BigDecimal dureeMax
-	 * 
-	*/
-	public void addForfait(String... parameters){
-		
-		try {
-			
+	 * Sauvegarde tout objet !
+	 */
+	public void saveObject( Class<T> classType, Object object){
+		try{
 			beginTransaction();
-			
-			Forfait forfait = new Forfait(parameters[1],
-											new BigDecimal(parameters[2]),
-											new BigDecimal(parameters[3]),
-											new BigDecimal(parameters[4])
-										);
-			session.save(forfait);
-			transaction.commit();
+			session.save((T) object);
 		}
 		catch(HibernateException e){
 			transaction.rollback();
-			e.printStackTrace();
+			System.out.println("ERREUR DURANT LA SAUVEGARDE + (" + classType + ") : " + e);
 		}
-		
 		finally{
 			endTransaction();
 		}
 	}
 	
 	/*
-	 * Retourne un forfait
-	 */
-	public Forfait getForfait(String id){
+	 * classType : Type de la classe
+	 * parameters : idFilm = '12131' ... par exemple
+	 * */
+	public List<T> getObjects(Class<T> classType, String... parameters){
 		
-		Forfait forfait = null;
-		
+		List<T> objects = null;
+		String sqlQuery = "from " + classType.getCanonicalName() + " where";
 		try{
 			beginTransaction();
 			
-			forfait = (Forfait) session.get(Forfait.class, id);
+			for (int i = 0; i < parameters.length; i++){
+				sqlQuery += " " + parameters[i];
+				if(i < parameters.length - 1){
+					sqlQuery += " and";
+				}
+			}
+			
+			Query query = session.createQuery(sqlQuery);
+			objects = (List<T>) query.list();
 			transaction.commit();
 		}
 		
 		catch(HibernateException e){
 			transaction.rollback();
-			e.printStackTrace();
+			System.out.println("ERREUR DURANT LA RECUPERATION + (" + classType + ", SQL : + " + sqlQuery + ") : " + e);
 		}
 		
 		finally{
 			endTransaction();
 		}
 		
-		return forfait;
+		return objects;
 	}
 	
 	/*
-	 * Ajoute un utilisateur (Type employe)
-	 * 
-	 * 	BigDecimal idutilisateur, String nomfamille,
-		String prenom, String utilisateurtype, String telephone,
-		String courriel, BigDecimal numerocivique, String rue,
-		String ville, String province, String codepostal,
-		Date datenaissance, String identificateur, String motdepasse) {
+	 * Retourne la liste de tous les objets
 	 */
-	public void addUser(String... parameters){
+	public List<T> getAllObjects(Class<T> classType){
 		
-		try {
-			beginTransaction();
-			
-			Utilisateur utilisateur = new Utilisateur(
-												new BigDecimal(parameters[0]),	// id
-												parameters[1],					// nom
-												parameters[2],					// prenom
-												parameters[3],					// userType
-												parameters[4],					// telephone
-												parameters[5],					// courriel
-												new BigDecimal(parameters[6]),	// numero civique
-												parameters[7],					// rue
-												parameters[8],					// ville
-												parameters[9],					// province
-												parameters[10],					// codepostal
-												new SimpleDateFormat("yyyy/mm/dd").parse(parameters[11]),		// datenaissance
-												parameters[12],					// login
-												parameters[13]					// motdepasse
-												
-										);
-			
-			session.save(utilisateur);
-			transaction.commit();
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-	}
-	
-	public Utilisateur getUser(String login, String password){
-		
-		Utilisateur utilisateur = null;
+		List<T> objects = null;
 		
 		try{
 			beginTransaction();
-			Query query = session.createQuery("from Utilisateur where identificateur = :login and motdepasse = :password");
-			query.setParameter("login", login);
-			query.setParameter("password", password);
-			
-			utilisateur = (Utilisateur) query.uniqueResult();
-		}
-		
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-		
-		return utilisateur;
-	}
-	
-	public Film getFilm(String id){
-		
-		Film film = null;
-		
-		try{
-			beginTransaction();
-			
-			film = (Film) session.get(Film.class, new BigDecimal(id));
+			objects = (List<T>) session.createCriteria(classType).list();
 			transaction.commit();
-			
 		}
+		
 		catch(HibernateException e){
 			transaction.rollback();
-			e.printStackTrace();
+			System.out.println("ERREUR DURANT LES RECUPERATIONS + (" + classType + ") : " + e);
 		}
 		
 		finally{
 			endTransaction();
 		}
 		
-		return film;
+		return objects;
 	}
 	
-	public ArrayList<Film> getFilms(String... parameters){
+	
+	/*public ArrayList<Film> getFilms(String... parameters){
 
 		ArrayList<Film> films = null;
+		String sql =	"SELECT " + 
+		  				"Film.idfilm, " +  
+		  				"Film.titre, " + 
+		  				"Film.anneesortie, " + 
+		  				"Film.Langue, " +
+		  				"Film.duree, " + 
+		  				"Film.resume, " +
+		  				"Film.image " +
+		  				"FROM " +
+		  				"Film inner join FILMPAYS on Film.IDFILM = FILMPAYS.IDFILM " +
+		  				"inner join Pays on PAYS.IDPAYS = FILMPAYS.IDPAYS " +
+		  				"inner join FILMGENRE on Film.IDFILM = FILMGENRE.IDFILM " +
+		  				"inner join GENRE on FILMGENRE.IDGENRE = GENRE.IDGENRE " +
+		  				"inner join IMPLICATION on FILM.IDFILM = IMPLICATION.IDFILM " +
+		  				"inner join PERSONNE on IMPLICATION.IDPERSONNE = PERSONNE.IDPERSONNE " +
+		  				"inner join TYPEPERSONNE on IMPLICATION.IDTYPEPERSONNE = TYPEPERSONNE.IDTYPEPERSONNE " +
+		  				//"WHERE " +
+		  				//"Film.Titre like 'The' " +
+		  				"GROUP BY Film.idFilm " +
+		  				"ORDER BY Film.titre ASC ;";
+ 
+		
 		
 		try{
 			beginTransaction();
-			Query query = session.createQuery(	"from Film where " +
-												"titre like :title and " +
-												"anneesortie >= :beginDate and " + 
-												"anneesortie <= :endDate ");
+			SQLQuery query = session.createSQLQuery(sql);
+			query.addEntity(Film.class);
+			
+			/*
+			Query query = session.createQuery("from VueFilm where " +
+					  						  "titre like :title " +
+					  						  "film.anneesortie >= :beginDate and " +
+					  						  "film.anneesortie >= :endDate and " +
+					  						  "langue = :language and " + 
+					  						  "Pays.nompays = :country and " +
+					  						  "genre.libellegenre = :gender and " +
+					  						  "nompersonne >= :name " +
+					  						  "group by idfilm " +
+					  						  "order by titre ASC");
 			
 			// pays, genre, nom realisateur, nom acteur
 			
-			if(parameters.length >= 1 ) query.setParameter("titre", parameters[0]);
+			if(parameters.length >= 1 ) query.setParameter("title", parameters[0]);
 			if(parameters.length >= 2 ) query.setParameter("beginDate", parameters[1]);
 			if(parameters.length >= 3 ) query.setParameter("endDate", parameters[2]);
+			if(parameters.length >= 4 ) query.setParameter("langue", parameters[3]);
+			if(parameters.length >= 5 ) query.setParameter("pays", parameters[4]);
+			if(parameters.length >= 6 ) query.setParameter("gender", parameters[5]);
+			if(parameters.length >= 7 ) query.setParameter("name", parameters[6]);
 			
 			films = (ArrayList<Film>) query.list();
+			
 		}
 		catch(HibernateException e){
 			transaction.rollback();
@@ -265,136 +224,5 @@ public class Facade<T> {
 		}
 		
 		return films;
-	}
-	// Accesseurs de liste ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	
-	/*
-	 * Liste des films
-	 */
-	public ArrayList<Film> getFilms(){
-		
-		ArrayList<Film> list = new ArrayList<Film>();
-		
-		try{
-			beginTransaction();
-			list		= (ArrayList<Film>) session.createCriteria(Film.class).list();
-			transaction.commit();
-			
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-		
-		return list;
-	}
-	
-	/*
-	 * Liste des utilisateurs
-	 */
-	public ArrayList<Utilisateur> getUtilisateurs(){
-		
-		ArrayList<Utilisateur> list = new ArrayList<Utilisateur>();
-		
-		try{
-			beginTransaction();
-			
-			list		= (ArrayList<Utilisateur>) session.createCriteria(Utilisateur.class).list();
-			transaction.commit();
-			
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-		
-		return list;
-	}
-	
-	/*
-	 * Liste des exemplaires
-	 */
-	public ArrayList<Exemplaire> getExemplaires(){
-		
-		ArrayList<Exemplaire> list = new ArrayList<Exemplaire>();
-		
-		try{
-			beginTransaction();
-			
-			list		= (ArrayList<Exemplaire>) session.createCriteria(Exemplaire.class).list();
-			transaction.commit();
-			
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-		
-		return list;
-	}
-	
-	/*
-	 * Liste des genres
-	 */
-	public ArrayList<Genre> getGenres(){
-		
-		ArrayList<Genre> list = new ArrayList<Genre>();
-		
-		try{
-			beginTransaction();
-			list		= (ArrayList<Genre>) session.createCriteria(Genre.class).list();
-			transaction.commit();
-			
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-		
-		return list;
-	}
-	
-	/*
-	 * Liste des personnes
-	 */
-	public ArrayList<Personne> getPersonnes(){
-		
-		ArrayList<Personne> list = new ArrayList<Personne>();
-		
-		try{
-			beginTransaction();
-			list = (ArrayList<Personne>) session.createCriteria(Personne.class).list();
-			transaction.commit();
-			
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			e.printStackTrace();
-		}
-		
-		finally{
-			endTransaction();
-		}
-		
-		return list;
-	}
-	
-	// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	
+	} */
 }
