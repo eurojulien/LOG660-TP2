@@ -6,7 +6,9 @@
     <class name="modele.Annonce" table="ANNONCE">
         <id name="idannonce" type="big_decimal">
             <column name="IDANNONCE" precision="38" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+            	<param name="sequence">ANNONCE_SEQ</param>
+            </generator>
         </id>
         <many-to-one name="film" class="modele.Film" fetch="select">
             <column name="IDFILM" precision="38" scale="0" not-null="true" />

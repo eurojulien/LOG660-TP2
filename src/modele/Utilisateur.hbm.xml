@@ -6,7 +6,9 @@
     <class name="modele.Utilisateur" table="UTILISATEUR">
         <id name="idutilisateur" type="big_decimal">
             <column name="IDUTILISATEUR" precision="38" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+            	<param name="sequence">UTILISATEUR_SEQ</param>
+            </generator>
         </id>
         <many-to-one name="forfait" class="modele.Forfait" fetch="select">
             <column name="IDFORFAIT" precision="1" scale="0" />

@@ -22,8 +22,20 @@ public class Typepersonne implements java.io.Serializable {
 		this.idtypepersonne = idtypepersonne;
 		this.typepersonne = typepersonne;
 	}
+	
+	public Typepersonne(String typepersonne) {
+		this.idtypepersonne = idtypepersonne;
+		this.typepersonne = typepersonne;
+	}
 
 	public Typepersonne(BigDecimal idtypepersonne, String typepersonne,
+			Set implications) {
+		this.idtypepersonne = idtypepersonne;
+		this.typepersonne = typepersonne;
+		this.implications = implications;
+	}
+	
+	public Typepersonne(String typepersonne,
 			Set implications) {
 		this.idtypepersonne = idtypepersonne;
 		this.typepersonne = typepersonne;

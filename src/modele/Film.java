@@ -35,12 +35,37 @@ public class Film implements java.io.Serializable {
 		this.duree = duree;
 		this.resume = resume;
 	}
+	
+	public Film(String titre, short anneesortie,
+			BigDecimal duree, String resume) {
+		this.titre = titre;
+		this.anneesortie = anneesortie;
+		this.duree = duree;
+		this.resume = resume;
+	}
 
 	public Film(BigDecimal idfilm, String titre, short anneesortie,
 			String langue, BigDecimal duree, String resume, String image,
 			Set payses, Set genres, Set annonces, Set implications,
 			Set exemplaires) {
 		this.idfilm = idfilm;
+		this.titre = titre;
+		this.anneesortie = anneesortie;
+		this.langue = langue;
+		this.duree = duree;
+		this.resume = resume;
+		this.image = image;
+		this.payses = payses;
+		this.genres = genres;
+		this.annonces = annonces;
+		this.implications = implications;
+		this.exemplaires = exemplaires;
+	}
+	
+	public Film(String titre, short anneesortie,
+			String langue, BigDecimal duree, String resume, String image,
+			Set payses, Set genres, Set annonces, Set implications,
+			Set exemplaires) {
 		this.titre = titre;
 		this.anneesortie = anneesortie;
 		this.langue = langue;

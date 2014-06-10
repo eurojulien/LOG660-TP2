@@ -33,6 +33,7 @@ public class Utilisateur implements java.io.Serializable {
 	public Utilisateur() {
 	}
 
+	//Employe avec ID
 	public Utilisateur(BigDecimal idutilisateur, String nomfamille,
 			String prenom, String utilisateurtype, String telephone,
 			String courriel, BigDecimal numerocivique, String rue,
@@ -53,7 +54,29 @@ public class Utilisateur implements java.io.Serializable {
 		this.identificateur = identificateur;
 		this.motdepasse = motdepasse;
 	}
+	
+	//Employe sans ID
+	public Utilisateur(String nomfamille,
+			String prenom, String utilisateurtype, String telephone,
+			String courriel, BigDecimal numerocivique, String rue,
+			String ville, String province, String codepostal,
+			Date datenaissance, String identificateur, String motdepasse) {
+		this.nomfamille = nomfamille;
+		this.prenom = prenom;
+		this.utilisateurtype = utilisateurtype;
+		this.telephone = telephone;
+		this.courriel = courriel;
+		this.numerocivique = numerocivique;
+		this.rue = rue;
+		this.ville = ville;
+		this.province = province;
+		this.codepostal = codepostal;
+		this.datenaissance = datenaissance;
+		this.identificateur = identificateur;
+		this.motdepasse = motdepasse;
+	}
 
+	//Client avec ID
 	public Utilisateur(BigDecimal idutilisateur, Forfait forfait,
 			String nomfamille, String prenom, String utilisateurtype,
 			String telephone, String courriel, BigDecimal numerocivique,
@@ -62,6 +85,34 @@ public class Utilisateur implements java.io.Serializable {
 			String cartecredittype, Long cartecreditnumero,
 			Date cartecreditdateexp, Short cartecreditcvv) {
 		this.idutilisateur = idutilisateur;
+		this.forfait = forfait;
+		this.nomfamille = nomfamille;
+		this.prenom = prenom;
+		this.utilisateurtype = utilisateurtype;
+		this.telephone = telephone;
+		this.courriel = courriel;
+		this.numerocivique = numerocivique;
+		this.rue = rue;
+		this.ville = ville;
+		this.province = province;
+		this.codepostal = codepostal;
+		this.datenaissance = datenaissance;
+		this.identificateur = identificateur;
+		this.motdepasse = motdepasse;
+		this.cartecredittype = cartecredittype;
+		this.cartecreditnumero = cartecreditnumero;
+		this.cartecreditdateexp = cartecreditdateexp;
+		this.cartecreditcvv = cartecreditcvv;
+	}
+	
+	//Client sans ID
+	public Utilisateur(Forfait forfait,
+			String nomfamille, String prenom, String utilisateurtype,
+			String telephone, String courriel, BigDecimal numerocivique,
+			String rue, String ville, String province, String codepostal,
+			Date datenaissance, String identificateur, String motdepasse,
+			String cartecredittype, Long cartecreditnumero,
+			Date cartecreditdateexp, Short cartecreditcvv) {
 		this.forfait = forfait;
 		this.nomfamille = nomfamille;
 		this.prenom = prenom;

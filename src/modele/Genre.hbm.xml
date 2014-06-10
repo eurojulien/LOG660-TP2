@@ -6,7 +6,9 @@
     <class name="modele.Genre" table="GENRE">
         <id name="idgenre" type="big_decimal">
             <column name="IDGENRE" precision="38" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+            	<param name="sequence">GENRE_SEQ</param>
+            </generator>
         </id>
         <property name="libellegenre" type="string">
             <column name="LIBELLEGENRE" length="50" not-null="true" />

@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class Forfait implements java.io.Serializable {
 
-	private boolean idforfait;
+	private BigDecimal idforfait;
 	private String nom;
 	private BigDecimal coutforfait;
 	private BigDecimal locationmax;
@@ -21,7 +21,7 @@ public class Forfait implements java.io.Serializable {
 	public Forfait() {
 	}
 
-	public Forfait(boolean idforfait, String nom, BigDecimal coutforfait,
+	public Forfait(BigDecimal idforfait, String nom, BigDecimal coutforfait,
 			BigDecimal locationmax, BigDecimal dureemax) {
 		this.idforfait = idforfait;
 		this.nom = nom;
@@ -29,8 +29,16 @@ public class Forfait implements java.io.Serializable {
 		this.locationmax = locationmax;
 		this.dureemax = dureemax;
 	}
+	
+	public Forfait(String nom, BigDecimal coutforfait,
+			BigDecimal locationmax, BigDecimal dureemax) {
+		this.nom = nom;
+		this.coutforfait = coutforfait;
+		this.locationmax = locationmax;
+		this.dureemax = dureemax;
+	}
 
-	public Forfait(boolean idforfait, String nom, BigDecimal coutforfait,
+	public Forfait(BigDecimal idforfait, String nom, BigDecimal coutforfait,
 			BigDecimal locationmax, BigDecimal dureemax, Set utilisateurs) {
 		this.idforfait = idforfait;
 		this.nom = nom;
@@ -39,12 +47,21 @@ public class Forfait implements java.io.Serializable {
 		this.dureemax = dureemax;
 		this.utilisateurs = utilisateurs;
 	}
+	
+	public Forfait(String nom, BigDecimal coutforfait,
+			BigDecimal locationmax, BigDecimal dureemax, Set utilisateurs) {
+		this.nom = nom;
+		this.coutforfait = coutforfait;
+		this.locationmax = locationmax;
+		this.dureemax = dureemax;
+		this.utilisateurs = utilisateurs;
+	}
 
-	public boolean isIdforfait() {
+	public BigDecimal isIdforfait() {
 		return this.idforfait;
 	}
 
-	public void setIdforfait(boolean idforfait) {
+	public void setIdforfait(BigDecimal idforfait) {
 		this.idforfait = idforfait;
 	}
 

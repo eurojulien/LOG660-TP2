@@ -6,7 +6,9 @@
     <class name="modele.Typepersonne" table="TYPEPERSONNE">
         <id name="idtypepersonne" type="big_decimal">
             <column name="IDTYPEPERSONNE" precision="38" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+            	<param name="sequence">TYPEPERSONNE_SEQ</param>
+            </generator>
         </id>
         <property name="typepersonne" type="string">
             <column name="TYPEPERSONNE" length="50" not-null="true" />

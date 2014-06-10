@@ -21,6 +21,11 @@ public class Annonce implements java.io.Serializable {
 		this.film = film;
 		this.announce = announce;
 	}
+	
+	public Annonce(Film film, String announce) {
+		this.film = film;
+		this.announce = announce;
+	}
 
 	public BigDecimal getIdannonce() {
 		return this.idannonce;
