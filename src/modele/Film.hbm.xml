@@ -6,7 +6,9 @@
     <class name="modele.Film" table="FILM">
         <id name="idfilm" type="big_decimal">
             <column name="IDFILM" precision="38" scale="0" />
-            <generator class="assigned" />
+            <generator class="sequence">
+            	<param name="sequence">FILM_SEQ</param>
+            </generator>
         </id>
         <property name="titre" type="string">
             <column name="TITRE" length="100" not-null="true" />

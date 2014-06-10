@@ -4,9 +4,11 @@
 <!-- Generated Jun 9, 2014 4:05:17 PM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="modele.Forfait" table="FORFAIT">
-        <id name="idforfait" type="boolean">
-            <column name="IDFORFAIT" precision="1" scale="0" />
-            <generator class="assigned" />
+        <id name="idforfait" type="big_decimal">
+            <column name="IDFORFAIT" precision="38" scale="0" />
+            <generator class="sequence">
+            	<param name="sequence">FORFAIT_SEQ</param>
+            </generator>
         </id>
         <property name="nom" type="string">
             <column name="NOM" length="50" not-null="true" />

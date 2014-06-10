@@ -1,9 +1,6 @@
 import java.util.ArrayList;
-
 import controlleur.Facade;
 import modele.Utilisateur;
-
-
 
 
 public class MainClass {
@@ -43,6 +40,7 @@ public class MainClass {
 		for (Film movie : films){
 			System.out.println("Description : " + movie.getResume());
 		} */
+	
 	}
 
 }

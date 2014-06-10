@@ -96,9 +96,7 @@ public class Facade<T> {
 			
 			beginTransaction();
 			
-			Forfait forfait = new Forfait(
-											true,
-											parameters[1],
+			Forfait forfait = new Forfait(parameters[1],
 											new BigDecimal(parameters[2]),
 											new BigDecimal(parameters[3]),
 											new BigDecimal(parameters[4])
@@ -143,7 +141,7 @@ public class Facade<T> {
 	}
 	
 	/*
-	 * Ajoute un utilisateur
+	 * Ajoute un utilisateur (Type employe)
 	 * 
 	 * 	BigDecimal idutilisateur, String nomfamille,
 		String prenom, String utilisateurtype, String telephone,
@@ -381,7 +379,7 @@ public class Facade<T> {
 		
 		try{
 			beginTransaction();
-			list		= (ArrayList<Personne>) session.createCriteria(Personne.class).list();
+			list = (ArrayList<Personne>) session.createCriteria(Personne.class).list();
 			transaction.commit();
 			
 		}

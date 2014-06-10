@@ -22,9 +22,18 @@ public class Genre implements java.io.Serializable {
 		this.idgenre = idgenre;
 		this.libellegenre = libellegenre;
 	}
+	
+	public Genre(String libellegenre) {
+		this.libellegenre = libellegenre;
+	}
 
 	public Genre(BigDecimal idgenre, String libellegenre, Set films) {
 		this.idgenre = idgenre;
+		this.libellegenre = libellegenre;
+		this.films = films;
+	}
+	
+	public Genre(String libellegenre, Set films) {
 		this.libellegenre = libellegenre;
 		this.films = films;
 	}

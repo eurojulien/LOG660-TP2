@@ -22,9 +22,18 @@ public class Pays implements java.io.Serializable {
 		this.idpays = idpays;
 		this.nompays = nompays;
 	}
+	
+	public Pays(String nompays) {
+		this.nompays = nompays;
+	}
 
 	public Pays(BigDecimal idpays, String nompays, Set films) {
 		this.idpays = idpays;
+		this.nompays = nompays;
+		this.films = films;
+	}
+	
+	public Pays(String nompays, Set films) {
 		this.nompays = nompays;
 		this.films = films;
 	}

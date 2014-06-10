@@ -28,11 +28,28 @@ public class Personne implements java.io.Serializable {
 		this.idpersonne = idpersonne;
 		this.nom = nom;
 	}
+	
+	public Personne(String nom) {
+		this.idpersonne = idpersonne;
+		this.nom = nom;
+	}
 
 	public Personne(BigDecimal idpersonne, String nom, String prenom,
 			Date datedenaissance, String lieudenaissance, String biographie,
 			String photo, Set implications) {
 		this.idpersonne = idpersonne;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.datedenaissance = datedenaissance;
+		this.lieudenaissance = lieudenaissance;
+		this.biographie = biographie;
+		this.photo = photo;
+		this.implications = implications;
+	}
+	
+	public Personne(String nom, String prenom,
+			Date datedenaissance, String lieudenaissance, String biographie,
+			String photo, Set implications) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.datedenaissance = datedenaissance;

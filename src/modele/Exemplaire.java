@@ -21,6 +21,11 @@ public class Exemplaire implements java.io.Serializable {
 		this.film = film;
 		this.disponible = disponible;
 	}
+	
+	public Exemplaire(Film film, boolean disponible) {
+		this.film = film;
+		this.disponible = disponible;
+	}
 
 	public BigDecimal getIdexemplaire() {
 		return this.idexemplaire;
