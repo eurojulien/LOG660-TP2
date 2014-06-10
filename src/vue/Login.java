@@ -7,18 +7,32 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JPasswordField;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+
+
 
 //import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Label;
+import java.util.ArrayList;
+
 import javax.swing.JComboBox;
+
+import modele.Exemplaire;
+import modele.Film;
+import modele.Utilisateur;
+import controlleur.Facade;
 
 public class Login extends JFrame {
 
@@ -88,7 +102,27 @@ public class Login extends JFrame {
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				Facade facade = Facade.getFacade();
 
+			
+				ArrayList<Utilisateur> user = (ArrayList<Utilisateur>) facade.getObjects(Utilisateur.class, 
+									"identificateur = '" + txtNomUtilisateur.getText() + "'", 
+									"motdepasse = '" + txtMotDePasse.getText() + "'");
+				if(!user.isEmpty()){
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.setVisible(true);
+								
+				}else 
+				{
+					lblMessage.setText("Error !!");
+				}
+				
+//				ArrayList<Film> films = (ArrayList<Film>) facade.getObjects(Film.class, "idFilm = 34492");
+//				System.out.println("Film : " + films.get(0).getResume());
+//				
+//				ArrayList<Exemplaire> exe = (ArrayList<Exemplaire>) facade.getObjects(Exemplaire.class,"idFilm = " + films.get(0).getIdfilm().toPlainString());
+//				System.out.println("Exemplaires : " + exe.get(0).getIdexemplaire());
+				
 			}
 		});
 		btnValider.setFont(new Font("Verdana", Font.BOLD, 13));
