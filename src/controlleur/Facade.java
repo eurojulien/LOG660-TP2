@@ -122,7 +122,7 @@ public class Facade<T> {
 		
 		catch(HibernateException e){
 			transaction.rollback();
-			System.out.println("ERREUR DURANT LA RECUPERATION (" + classType + ", SQL : + " + sqlQuery + ") : " + e);
+			System.out.println("ERREUR DURANT LA RECUPERATION (" + classType + ", SQL : " + sqlQuery + ") : " + e);
 		}
 		
 		finally{
