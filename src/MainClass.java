@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import vue.Login;
 import controlleur.Facade;
+import controlleur.LoginControlleur;
 import modele.*;
 
 
@@ -18,7 +19,10 @@ public class MainClass {
 //		ArrayList<Exemplaire> exe = (ArrayList<Exemplaire>) facade.getObjects(Exemplaire.class,"idFilm = " + films.get(0).getIdfilm().toPlainString());
 //		System.out.println("Exemplaires : " + exe.get(0).getIdexemplaire());
 		
-		new Login().setVisible(true);;
+		//new Login().setVisible(true);
+		
+		LoginControlleur loginControlleur = new LoginControlleur();
+		loginControlleur.showGui();
 	}
 
 }
