@@ -47,7 +47,7 @@ public class Login extends JFrame {
 	public Login() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, -21, 457, 331);
+		setBounds(100, 50, 457, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -109,8 +109,8 @@ public class Login extends JFrame {
 									"identificateur = '" + txtNomUtilisateur.getText() + "'", 
 									"motdepasse = '" + txtMotDePasse.getText() + "'");
 				if(!user.isEmpty()){
-				MenuPrincipal menu = new MenuPrincipal();
-				menu.setVisible(true);
+					MenuPrincipal menu = new MenuPrincipal();
+					menu.setVisible(true);
 								
 				}else 
 				{
