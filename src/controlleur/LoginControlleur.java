@@ -54,7 +54,7 @@ public class LoginControlleur{
 			menuControlleur.showGui(); //show the main menu
 		}else 
 		{
-			loginGui.setTextOnlblMessage("Error: Nom d'utilisateur ou/et Mot de passe invalid!");
+			loginGui.setTextOnlblMessage("Error: Nom d'utilisateur ou/et Mot de passe invalide!");
 		}
 		
 		//		ArrayList<Film> films = (ArrayList<Film>) facade.getObjects(Film.class, "idFilm = 34492");

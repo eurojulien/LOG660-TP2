@@ -32,13 +32,15 @@ import modele.Film;
 import modele.Utilisateur;
 import controlleur.Facade;
 import controlleur.LoginControlleur;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNomUtilisateur;
 	private JPasswordField txtMotDePasse;
-	private JLabel lblMessage;
+	private JTextArea lblMessage;
 	private LoginControlleur loginControlleur;
 	//static Authentification Authentifi = new Authentification();
 
@@ -94,11 +96,13 @@ public class Login extends JFrame {
 		txtMotDePasse.setText("uhohHequ1");
 		panel.add(txtMotDePasse);
 		
-		lblMessage = new JLabel("");
+		lblMessage = new JTextArea("");
+		lblMessage.setLineWrap(true);
+		lblMessage.setWrapStyleWord(true);
+		lblMessage.setBackground(UIManager.getColor("Button.background"));
 		lblMessage.setForeground(new Color(255, 0, 0));
 		lblMessage.setFont(new Font("Verdana", Font.BOLD, 13));
-		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMessage.setBounds(33, 231, 333, 31);
+		lblMessage.setBounds(33, 234, 333, 48);
 		panel.add(lblMessage);
 		
 		
