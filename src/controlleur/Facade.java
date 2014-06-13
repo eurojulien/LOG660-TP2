@@ -98,6 +98,23 @@ public class Facade<T> {
 	}
 	
 	/*
+	 * Met a jour tout objet !
+	 */
+	public void updateObject( Class<T> classType, Object object){
+		try{
+			beginTransaction();
+			session.update((T) object);
+		}
+		catch(HibernateException e){
+			transaction.rollback();
+			System.out.println("ERREUR DURANT LA MISE A JOUR (" + classType + ") : " + e);
+		}
+		finally{
+			endTransaction();
+		}
+	}
+	
+	/*
 	 * classType : Type de la classe
 	 * parameters : idFilm = '12131' ... par exemple
 	 * */
