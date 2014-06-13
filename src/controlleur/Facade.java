@@ -33,7 +33,7 @@ public class Facade<T> {
 	
 	public static Facade facade = null;
 	
-	private Facade(){
+	protected Facade(){
 		
 		try{
 			Configuration configuration = new Configuration();

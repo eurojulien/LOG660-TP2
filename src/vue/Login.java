@@ -7,18 +7,32 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JPasswordField;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+
+
 
 //import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Label;
+import java.util.ArrayList;
+
 import javax.swing.JComboBox;
+
+import modele.Exemplaire;
+import modele.Film;
+import modele.Utilisateur;
+import controlleur.Facade;
 
 public class Login extends JFrame {
 
@@ -33,7 +47,7 @@ public class Login extends JFrame {
 	public Login() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, -21, 457, 331);
+		setBounds(100, 50, 457, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -88,7 +102,28 @@ public class Login extends JFrame {
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				Facade facade = Facade.getFacade();
 
+			
+				ArrayList<Utilisateur> user = (ArrayList<Utilisateur>) facade.getObjects(Utilisateur.class, 
+									"identificateur = '" + txtNomUtilisateur.getText() + "'", 
+									"motdepasse = '" + txtMotDePasse.getText() + "'");
+				if(!user.isEmpty()){
+					MenuPrincipal menu = new MenuPrincipal();
+					menu.setVisible(true);
+					setVisible(false);
+								
+				}else 
+				{
+					lblMessage.setText("Error !!");
+				}
+				
+//				ArrayList<Film> films = (ArrayList<Film>) facade.getObjects(Film.class, "idFilm = 34492");
+//				System.out.println("Film : " + films.get(0).getResume());
+//				
+//				ArrayList<Exemplaire> exe = (ArrayList<Exemplaire>) facade.getObjects(Exemplaire.class,"idFilm = " + films.get(0).getIdfilm().toPlainString());
+//				System.out.println("Exemplaires : " + exe.get(0).getIdexemplaire());
+				
 			}
 		});
 		btnValider.setFont(new Font("Verdana", Font.BOLD, 13));
@@ -98,7 +133,7 @@ public class Login extends JFrame {
 		Label label = new Label("Page d'acc\u00E8s");
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 18));
-		label.setBackground(SystemColor.inactiveCaption);
+		label.setBackground(Color.BLUE);
 		label.setBounds(0, 22, 427, 22);
 		panel.add(label);
 	}
