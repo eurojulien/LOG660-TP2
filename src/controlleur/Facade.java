@@ -64,8 +64,10 @@ public class Facade<T> {
 	 * Ferme une session/Transaction apres une action avec la base de donnees
 	 */
 	private void endTransaction(){
-		session.close();
+		transaction.commit();
 		transaction = null;
+		session.close();
+		
 	}
 	
 	/*
