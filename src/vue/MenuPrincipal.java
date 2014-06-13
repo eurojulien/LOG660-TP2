@@ -71,7 +71,7 @@ public class MenuPrincipal extends JFrame {
 		label.setBounds(0, 10, 427, 22);
 		panel.add(label);
 		
-		JButton btnGestionForfaits = new JButton("Gestion forfaits");
+		JButton btnGestionForfaits = new JButton("Rechecher film");
 		btnGestionForfaits.setFont(new Font("Verdana", Font.BOLD, 13));
 		btnGestionForfaits.setBounds(68, 145, 197, 44);
 		panel.add(btnGestionForfaits);
