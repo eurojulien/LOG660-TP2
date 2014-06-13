@@ -44,12 +44,12 @@ public class RechercherFilm extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		setTitle("Authentification");
+		setTitle("Recherche Film");
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		JButton btn_initialiser = new JButton("Initialiser");
-		btn_initialiser.setBounds(127, 437, 107, 44);
+		btn_initialiser.setBounds(144, 437, 107, 44);
 		btn_initialiser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -62,14 +62,14 @@ public class RechercherFilm extends JFrame {
 		label.setBounds(0, 10, 528, 22);
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 18));
-		label.setBackground(SystemColor.inactiveCaption);
+		label.setBackground(Color.BLUE);
 		
 		JButton btn_Annuler = new JButton("Annuler");
-		btn_Annuler.setBounds(261, 437, 107, 44);
+		btn_Annuler.setBounds(276, 437, 107, 44);
 		btn_Annuler.setFont(new Font("Verdana", Font.BOLD, 13));
 		
 		JButton btn_Rechercher = new JButton("Rehcecher");
-		btn_Rechercher.setBounds(0, 437, 107, 44);
+		btn_Rechercher.setBounds(0, 437, 117, 44);
 		btn_Rechercher.setFont(new Font("Verdana", Font.BOLD, 13));
 		
 		JButton btnAnnuler = new JButton("Fermer");

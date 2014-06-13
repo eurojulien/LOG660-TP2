@@ -132,7 +132,7 @@ public class Login extends JFrame {
 		Label label = new Label("Page d'acc\u00E8s");
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 18));
-		label.setBackground(SystemColor.inactiveCaption);
+		label.setBackground(Color.BLUE);
 		label.setBounds(0, 22, 427, 22);
 		panel.add(label);
 	}

@@ -67,7 +67,7 @@ public class MenuPrincipal extends JFrame {
 		Label label = new Label("Menu principal");
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 18));
-		label.setBackground(SystemColor.inactiveCaption);
+		label.setBackground(Color.BLUE);
 		label.setBounds(0, 10, 427, 22);
 		panel.add(label);
 		
