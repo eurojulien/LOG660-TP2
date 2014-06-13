@@ -64,8 +64,9 @@ public class Facade<T> {
 	 * Ferme une session/Transaction apres une action avec la base de donnees
 	 */
 	private void endTransaction(){
-		session.close();
 		transaction = null;
+		session.close();
+		
 	}
 	
 	/*
@@ -81,16 +82,17 @@ public class Facade<T> {
 	}
 	
 	/*
-	 * Sauvegarde tout objet !
+	 * Sauvegarde ou met a jour tout objet !
 	 */
-	public void saveObject( Class<T> classType, Object object){
+	public void saveOrUpdateObject( Class<T> classType, Object object){
 		try{
 			beginTransaction();
-			session.save((T) object);
+			session.saveOrUpdate((T) object);
+			transaction.commit();
 		}
 		catch(HibernateException e){
 			transaction.rollback();
-			System.out.println("ERREUR DURANT LA SAUVEGARDE + (" + classType + ") : " + e);
+			System.out.println("ERREUR DURANT LA SAUVEGARDE (" + classType + ") : " + e);
 		}
 		finally{
 			endTransaction();
@@ -122,7 +124,7 @@ public class Facade<T> {
 		
 		catch(HibernateException e){
 			transaction.rollback();
-			System.out.println("ERREUR DURANT LA RECUPERATION + (" + classType + ", SQL : + " + sqlQuery + ") : " + e);
+			System.out.println("ERREUR DURANT LA RECUPERATION (" + classType + ", SQL : " + sqlQuery + ") : " + e);
 		}
 		
 		finally{
@@ -147,7 +149,7 @@ public class Facade<T> {
 		
 		catch(HibernateException e){
 			transaction.rollback();
-			System.out.println("ERREUR DURANT LES RECUPERATIONS + (" + classType + ") : " + e);
+			System.out.println("ERREUR DURANT LES RECUPERATIONS (" + classType + ") : " + e);
 		}
 		
 		finally{
