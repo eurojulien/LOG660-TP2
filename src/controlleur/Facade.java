@@ -33,7 +33,7 @@ public class Facade<T> {
 	
 	public static Facade facade = null;
 	
-	protected Facade(){
+	private Facade(){
 		
 		try{
 			Configuration configuration = new Configuration();
@@ -155,6 +155,10 @@ public class Facade<T> {
 		}
 		
 		return objects;
+	}
+	
+	public void closeSessionForExit(){
+		sessionFactory.close();
 	}
 	
 	

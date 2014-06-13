@@ -1,14 +1,36 @@
 package controlleur;
 
+import java.util.ArrayList;
+
+import vue.Login;
 import modele.Utilisateur;
 
-public class LoginControlleur extends Facade{
+public class LoginControlleur{
 
 	private Utilisateur user;
 	
-	LoginControlleur(){
-		super();
-		//start gui
+	private Login loginGui;
+	
+	private MenuControlleur menuControlleur;
+	
+	public LoginControlleur(){
+		this.loginGui = new Login(this);
+		
+	}
+	
+	public void showGui(){
+		this.loginGui.setVisible(true);
+	}
+	
+	public void hideGui(){
+		this.loginGui.setVisible(false);
+	}
+	
+	public void userClosedWindow(){
+		Facade facade = Facade.getFacade();
+		facade.closeSessionForExit();
+		hideGui();
+		System.exit(0);
 	}
 	
 	public void LoginCheck(String username, String pass){
@@ -18,5 +40,32 @@ public class LoginControlleur extends Facade{
 			//tell gui to continue to next screen
 		//else
 			//tell GUI to show error message
+		
+		Facade facade = Facade.getFacade();
+
+		ArrayList<Utilisateur> users = (ArrayList<Utilisateur>) facade.getObjects(Utilisateur.class, 
+							"identificateur = '" + username + "'", 
+							"motdepasse = '" + pass + "'");
+		
+		if(!users.isEmpty()){
+			user = users.get(0);
+			hideGui(); //hide the login screen
+			menuControlleur = new MenuControlleur(this);
+			menuControlleur.showGui(); //show the main menu
+		}else 
+		{
+			loginGui.setTextOnlblMessage("Error: Nom d'utilisateur ou/et Mot de passe invalide!");
+		}
+		
+		//		ArrayList<Film> films = (ArrayList<Film>) facade.getObjects(Film.class, "idFilm = 34492");
+		//		System.out.println("Film : " + films.get(0).getResume());
+		//		
+		//		ArrayList<Exemplaire> exe = (ArrayList<Exemplaire>) facade.getObjects(Exemplaire.class,"idFilm = " + films.get(0).getIdfilm().toPlainString());
+		//		System.out.println("Exemplaires : " + exe.get(0).getIdexemplaire());
+		
+	}
+	
+	public Utilisateur getUser(){
+		return this.user;
 	}
 }

@@ -18,8 +18,6 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 
-
-
 //import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -33,20 +31,34 @@ import modele.Exemplaire;
 import modele.Film;
 import modele.Utilisateur;
 import controlleur.Facade;
+import controlleur.LoginControlleur;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
 
 public class Login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNomUtilisateur;
 	private JPasswordField txtMotDePasse;
+	private JTextArea lblMessage;
+	private LoginControlleur loginControlleur;
 	//static Authentification Authentifi = new Authentification();
 
 	/**
 	 * Create the frame.
+	 * @param loginControlleur 
 	 */
-	public Login() {
+	public Login(final LoginControlleur loginControlleur) {
+		this.loginControlleur = loginControlleur;
+		setVisible(false);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	loginControlleur.userClosedWindow();
+		    } 
+		});
 		setBounds(100, 50, 457, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,6 +74,8 @@ public class Login extends JFrame {
 		txtNomUtilisateur.setFont(new Font("Verdana", Font.BOLD, 13));
 		txtNomUtilisateur.setBounds(194, 80, 160, 28);
 		txtNomUtilisateur.setColumns(10);
+		//for debuging
+		txtNomUtilisateur.setText("DanaJDixon99@yahoo.com");
 		panel.add(txtNomUtilisateur);
 		
 		
@@ -78,20 +92,24 @@ public class Login extends JFrame {
 		txtMotDePasse = new JPasswordField();
 		txtMotDePasse.setForeground(new Color(0, 128, 0));
 		txtMotDePasse.setBounds(194, 121, 160, 28);
+		//for debuging
+		txtMotDePasse.setText("uhohHequ1");
 		panel.add(txtMotDePasse);
 		
-		final JLabel lblMessage = new JLabel("");
+		lblMessage = new JTextArea("");
+		lblMessage.setLineWrap(true);
+		lblMessage.setWrapStyleWord(true);
+		lblMessage.setBackground(UIManager.getColor("Button.background"));
 		lblMessage.setForeground(new Color(255, 0, 0));
 		lblMessage.setFont(new Font("Verdana", Font.BOLD, 13));
-		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMessage.setBounds(33, 231, 333, 31);
+		lblMessage.setBounds(33, 234, 333, 48);
 		panel.add(lblMessage);
 		
 		
 		JButton btnAnnuler = new JButton("Annuler");
 		btnAnnuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				loginControlleur.userClosedWindow();
 			}
 		});
 		btnAnnuler.setFont(new Font("Verdana", Font.BOLD, 13));
@@ -102,28 +120,7 @@ public class Login extends JFrame {
 		btnValider.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Facade facade = Facade.getFacade();
-
-			
-				ArrayList<Utilisateur> user = (ArrayList<Utilisateur>) facade.getObjects(Utilisateur.class, 
-									"identificateur = '" + txtNomUtilisateur.getText() + "'", 
-									"motdepasse = '" + txtMotDePasse.getText() + "'");
-				if(!user.isEmpty()){
-					MenuPrincipal menu = new MenuPrincipal();
-					menu.setVisible(true);
-					setVisible(false);
-								
-				}else 
-				{
-					lblMessage.setText("Error !!");
-				}
-				
-//				ArrayList<Film> films = (ArrayList<Film>) facade.getObjects(Film.class, "idFilm = 34492");
-//				System.out.println("Film : " + films.get(0).getResume());
-//				
-//				ArrayList<Exemplaire> exe = (ArrayList<Exemplaire>) facade.getObjects(Exemplaire.class,"idFilm = " + films.get(0).getIdfilm().toPlainString());
-//				System.out.println("Exemplaires : " + exe.get(0).getIdexemplaire());
-				
+				loginControlleur.LoginCheck(txtNomUtilisateur.getText(), txtMotDePasse.getText());
 			}
 		});
 		btnValider.setFont(new Font("Verdana", Font.BOLD, 13));
@@ -133,8 +130,12 @@ public class Login extends JFrame {
 		Label label = new Label("Page d'acc\u00E8s");
 		label.setAlignment(Label.CENTER);
 		label.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 18));
-		label.setBackground(Color.BLUE);
+		label.setBackground(SystemColor.inactiveCaption);
 		label.setBounds(0, 22, 427, 22);
 		panel.add(label);
+	}
+	
+	public void setTextOnlblMessage(String string){
+		lblMessage.setText(string);
 	}
 }
