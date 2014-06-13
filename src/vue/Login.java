@@ -111,6 +111,7 @@ public class Login extends JFrame {
 				if(!user.isEmpty()){
 					MenuPrincipal menu = new MenuPrincipal();
 					menu.setVisible(true);
+					setVisible(false);
 								
 				}else 
 				{

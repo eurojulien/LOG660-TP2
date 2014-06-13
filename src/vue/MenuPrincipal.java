@@ -72,6 +72,12 @@ public class MenuPrincipal extends JFrame {
 		panel.add(label);
 		
 		JButton btnGestionForfaits = new JButton("Rechecher film");
+		btnGestionForfaits.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RechercherFilm rechercheFilm = new RechercherFilm();
+				rechercheFilm.setVisible(true);
+			}
+		});
 		btnGestionForfaits.setFont(new Font("Verdana", Font.BOLD, 13));
 		btnGestionForfaits.setBounds(68, 145, 197, 44);
 		panel.add(btnGestionForfaits);
@@ -82,6 +88,11 @@ public class MenuPrincipal extends JFrame {
 		panel.add(btnGestionDesLocations);
 		
 		JButton btnAnnuler = new JButton("Fermer");
+		btnAnnuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		btnAnnuler.setFont(new Font("Verdana", Font.BOLD, 13));
 		btnAnnuler.setBounds(329, 238, 102, 44);
 		panel.add(btnAnnuler);

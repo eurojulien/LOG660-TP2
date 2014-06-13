@@ -104,7 +104,7 @@ public class RechercherFilm extends JFrame {
 		lblPaysDeProduction.setBounds(90, 167, 107, 19);
 		panel.add(lblPaysDeProduction);
 		
-		JLabel lblLangueOriginale = new JLabel("langue originale:");
+		JLabel lblLangueOriginale = new JLabel("Langue originale:");
 		lblLangueOriginale.setBounds(90, 217, 84, 19);
 		panel.add(lblLangueOriginale);
 		
@@ -130,7 +130,7 @@ public class RechercherFilm extends JFrame {
 		panel.add(lblEt);
 		
 		JComboBox comboBox_Pays = new JComboBox();
-		comboBox_Pays.setBounds(224, 166, 115, 20);
+		comboBox_Pays.setBounds(224, 166, 142, 20);
 		panel.add(comboBox_Pays);
 		
 		JComboBox comboBox_Genre = new JComboBox();
