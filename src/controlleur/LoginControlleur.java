@@ -2,7 +2,10 @@ package controlleur;
 
 import java.util.ArrayList;
 
+import net.sf.hibernate.Hibernate;
+import net.sf.hibernate.HibernateException;
 import vue.Login;
+import modele.Forfait;
 import modele.Utilisateur;
 
 public class LoginControlleur{
@@ -49,6 +52,7 @@ public class LoginControlleur{
 		
 		if(!users.isEmpty()){
 			user = users.get(0);
+			System.out.println("Forfait: " + user.getForfait().getNom());
 			hideGui(); //hide the login screen
 			menuControlleur = new MenuControlleur(this);
 			menuControlleur.showGui(); //show the main menu

@@ -15,7 +15,8 @@ public class MenuControlleur {
 	
 	public void showGui(){
 		this.menuGui.setVisible(true);
-		this.menuGui.setUserInfo(loginControlleur.getUser().getIdutilisateur().toPlainString());
+		this.menuGui.setUserInfo(loginControlleur.getUser().getPrenom() + " " +
+									loginControlleur.getUser().getNomfamille());
 	}
 	
 	public void hideGui(){
