@@ -64,7 +64,6 @@ public class Facade<T> {
 	 * Ferme une session/Transaction apres une action avec la base de donnees
 	 */
 	private void endTransaction(){
-		transaction.commit();
 		transaction = null;
 		session.close();
 		
@@ -83,33 +82,17 @@ public class Facade<T> {
 	}
 	
 	/*
-	 * Sauvegarde tout objet !
+	 * Sauvegarde ou met a jour tout objet !
 	 */
-	public void saveObject( Class<T> classType, Object object){
+	public void saveOrUpdateObject( Class<T> classType, Object object){
 		try{
 			beginTransaction();
-			session.save((T) object);
+			session.saveOrUpdate((T) object);
+			transaction.commit();
 		}
 		catch(HibernateException e){
 			transaction.rollback();
 			System.out.println("ERREUR DURANT LA SAUVEGARDE (" + classType + ") : " + e);
-		}
-		finally{
-			endTransaction();
-		}
-	}
-	
-	/*
-	 * Met a jour tout objet !
-	 */
-	public void updateObject( Class<T> classType, Object object){
-		try{
-			beginTransaction();
-			session.update((T) object);
-		}
-		catch(HibernateException e){
-			transaction.rollback();
-			System.out.println("ERREUR DURANT LA MISE A JOUR (" + classType + ") : " + e);
 		}
 		finally{
 			endTransaction();
