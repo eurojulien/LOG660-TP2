@@ -15,4 +15,5 @@
   <table-filter match-name="PERSONNE"/>
   <table-filter match-name="TYPEPERSONNE"/>
   <table-filter match-name="UTILISATEUR"/>
+  <table-filetr match-name="VUE_FILM"/>
 </hibernate-reverse-engineering>
