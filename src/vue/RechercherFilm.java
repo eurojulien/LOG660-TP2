@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
 
+
 //import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ import java.awt.Label;
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import javax.swing.border.BevelBorder;
@@ -49,8 +51,14 @@ public class RechercherFilm extends JFrame {
 		this.rechercheFilmCont = rechercheFilmCont;
 		setVisible(false);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, -21, 545, 519);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	rechercheFilmCont.userClosedWindowRechercher();
+		    } 
+		});
+		setBounds(100, 50, 545, 519);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -60,11 +68,11 @@ public class RechercherFilm extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		JButton btn_initialiser = new JButton("Initialiser");
-		btn_initialiser.setBounds(144, 437, 107, 44);
+		btn_initialiser.setEnabled(false);
+		btn_initialiser.setBounds(235, 437, 107, 44);
 		btn_initialiser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-
 			}
 		});
 		btn_initialiser.setFont(new Font("Verdana", Font.BOLD, 13));
@@ -76,11 +84,21 @@ public class RechercherFilm extends JFrame {
 		label.setBackground(Color.BLUE);
 		
 		JButton btn_Annuler = new JButton("Annuler");
-		btn_Annuler.setBounds(276, 437, 107, 44);
+		btn_Annuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rechercheFilmCont.userClosedWindowRechercher();
+			}
+		});
+		btn_Annuler.setBounds(412, 437, 107, 44);
 		btn_Annuler.setFont(new Font("Verdana", Font.BOLD, 13));
 		
-		JButton btn_Rechercher = new JButton("Rehcecher");
-		btn_Rechercher.setBounds(0, 437, 117, 44);
+		JButton btn_Rechercher = new JButton("Rechecher");
+		btn_Rechercher.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText());
+			}
+		});
+		btn_Rechercher.setBounds(57, 437, 117, 44);
 		btn_Rechercher.setFont(new Font("Verdana", Font.BOLD, 13));
 		
 		JButton btnAnnuler = new JButton("Fermer");
@@ -159,5 +177,9 @@ public class RechercherFilm extends JFrame {
 		JComboBox comboBox_Langue = new JComboBox();
 		comboBox_Langue.setBounds(222, 216, 144, 20);
 		panel.add(comboBox_Langue);
+	}
+	
+	public void showErrorMessage(String string) {
+		JOptionPane.showMessageDialog(null, string, "Erreur", JOptionPane.ERROR_MESSAGE);	
 	}
 }

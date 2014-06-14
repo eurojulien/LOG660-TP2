@@ -19,12 +19,12 @@ public class LouerControlleur {
 	
 	private ListFilmLouer listFilmLouerGui;
 	
-	ArrayList<Film> listFilm;
+	private ArrayList<Exemplaire> listExemplaire;
 	
 	public LouerControlleur(MenuControlleur menucont, Utilisateur user){
 		this.menucont = menucont;
 		this.user = user;
-		this.listFilm = new ArrayList<Film>();
+		this.listExemplaire = new ArrayList<Exemplaire>();
 		this.listFilmLouerGui = new ListFilmLouer(this);
 		this.recheFilmCont = new RechercheFilmCont(this);
 	}
@@ -42,22 +42,29 @@ public class LouerControlleur {
 		menucont.showGui();
 	}
 	
-	public int checkNombreDeFilmDejaSorti(){
+	public int checkNombreDeFilmDejaSortiParLeUser(){
 		int num = 0;
-		//TODO
-		return num;
+		Facade f = Facade.getFacade();
+		ArrayList<Locationfilm> listDeFilmSorti = (ArrayList<Locationfilm>) f.getObjects(Locationfilm.class, 
+				"idutilisateur = " + user.getIdutilisateur().intValue() , "datederetour = null"); //null parceque le film na
+		
+		return listDeFilmSorti.size();
 	}
 	
-	public void ajouterFilmALouer(Film film){
-		listFilm.add(film);
+	public void ajouterFilmALouer(Exemplaire exemplaire){
+		listExemplaire.add(exemplaire);
 		listFilmLouerGui.clearList();
-		for(Film f : listFilm){
-			listFilmLouerGui.addFilm(f.getTitre(), null);
+		for(Exemplaire e : listExemplaire){
+			listFilmLouerGui.addFilm(e.getFilm().getTitre());
 		}
 	}
 	
 	public void enleverFilm(int index){
-		listFilm.remove(index);
+		listExemplaire.remove(index);
+		listFilmLouerGui.clearList();
+		for(Exemplaire e : listExemplaire){
+			listFilmLouerGui.addFilm(e.getFilm().getTitre());
+		}
 	}
 	
 	public Exemplaire getExmplaireDisponiblePourFilm(int filmId){
@@ -70,11 +77,11 @@ public class LouerControlleur {
 	}
 	
 	public void louer(){
-
-		if(checkNombreDeFilmDejaSorti() + listFilm.size() > user.getForfait().getLocationmax().intValue()){
+		
+		if(checkNombreDeFilmDejaSortiParLeUser() + listExemplaire.size() <= user.getForfait().getLocationmax().intValue()){
 			
-			for(Film film : listFilm){
-				Exemplaire exem = getExmplaireDisponiblePourFilm(film.getIdfilm().intValue());
+			for(Exemplaire exem : listExemplaire){
+				
 				Locationfilm locFilm = new Locationfilm();
 				LocationfilmId locFilmId = new LocationfilmId();
 				Calendar cal = Calendar.getInstance();
@@ -87,15 +94,17 @@ public class LouerControlleur {
 				locFilm.setId(locFilmId);
 				locFilm.setDatedelocation(cal.getTime());
 				
-				if(user.getForfait().getDureemax().intValue() != 0){
+				//Date de retour content quand il c'est fait retourner
+				// et ne devrais pas contenir quand il est supposer etre retourner!
+				/*if(user.getForfait().getDureemax().intValue() != 0){
 					cal.add(Calendar.DATE, user.getForfait().getDureemax().intValue());
 					locFilm.setDatederetour(cal.getTime());
-				}
+				}*/
 				
 				Facade f = Facade.getFacade();
 				
 				f.saveOrUpdateObject(Exemplaire.class, exem);
-				f.saveOrUpdateObject(LocationfilmId.class, locFilmId);
+				//f.saveOrUpdateObject(LocationfilmId.class, locFilmId);
 				f.saveOrUpdateObject(Locationfilm.class, locFilm);
 				//Je suis pas sur si cela va marcher, je pense que LocationFilm et LocationFilmId
 				//doive entre commit dans la meme transaction

@@ -16,7 +16,7 @@
             <column name="DATEDELOCATION" length="7" not-null="true" />
         </property>
         <property name="datederetour" type="date">
-            <column name="DATEDERETOUR" length="7" not-null="true" />
+            <column name="DATEDERETOUR" length="7" not-null="false" />
         </property>
     </class>
 </hibernate-mapping>

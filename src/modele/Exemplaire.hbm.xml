@@ -10,7 +10,7 @@
             	<param name="sequence">EXEMPLAIRE_SEQ</param>
             </generator>
         </id>
-        <many-to-one name="film" class="modele.Film" fetch="select">
+        <many-to-one name="film" class="modele.Film" fetch="select" lazy="false">
             <column name="IDFILM" precision="38" scale="0" not-null="true" />
         </many-to-one>
         <property name="disponible" type="boolean">

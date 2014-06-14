@@ -17,15 +17,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Label;
+import java.util.Vector;
 
 import javax.swing.JList;
 
 import controlleur.LouerControlleur;
 
+import javax.swing.border.LineBorder;
+
 public class ListFilmLouer extends JFrame {
 
 	private JPanel contentPane;
 	private JList list;
+	private Vector<String> listModel;
 	private LouerControlleur louerControlleur;
 
 	/**
@@ -83,16 +87,23 @@ public class ListFilmLouer extends JFrame {
 		panel.add(btn_Add_Film);
 		panel.add(btn_Annuler);
 		
-		list = new JList();
-		list.setBackground(SystemColor.inactiveCaption);
+		listModel = new Vector<String>();
+		list = new JList(listModel);
+		list.setBorder(new LineBorder(new Color(0, 0, 0)));
+		list.setBackground(SystemColor.menu);
 		list.setBounds(22, 56, 571, 306);
 		panel.add(list);
 		
 		JButton btn_RemoveSelected = new JButton("Enlever Film Selectionner");
 		btn_RemoveSelected.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				list.remove(list.getSelectedIndex());
-				louerControlleur.enleverFilm(list.getSelectedIndex());
+				if(list.isSelectionEmpty()){
+					showErrorMessage("Aucun film selectionner.");
+				}
+				else{
+					list.remove(list.getSelectedIndex());
+					louerControlleur.enleverFilm(list.getSelectedIndex());
+				}
 			}
 		});
 		btn_RemoveSelected.setFont(new Font("Verdana", Font.BOLD, 13));
@@ -112,18 +123,15 @@ public class ListFilmLouer extends JFrame {
 	
 	public void clearList(){
 		list.removeAll();
+		listModel.clear();
 	}
 	
-	public void addFilm(String name, Component comp){
-		list.add(name, comp);
+	public void addFilm(String name){
+		listModel.addElement(name);
+		list.setListData(listModel);
 	}
 	
-	public int getSelected(){
-		return list.getSelectedIndex();
-	}
-
 	public void showErrorMessage(String string) {
-		JOptionPane.showMessageDialog(null, "Erreur", "InfoBox: " + string, JOptionPane.ERROR_MESSAGE);
-		
+		JOptionPane.showMessageDialog(null, string, "Erreur", JOptionPane.ERROR_MESSAGE);	
 	}
 }
