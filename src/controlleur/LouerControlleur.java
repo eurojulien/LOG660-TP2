@@ -67,15 +67,6 @@ public class LouerControlleur {
 		}
 	}
 	
-	public Exemplaire getExmplaireDisponiblePourFilm(int filmId){
-		Exemplaire exem = null;
-		Facade f = Facade.getFacade();
-		ArrayList<Exemplaire> exemplaires = (ArrayList<Exemplaire>) f.getObjects(Exemplaire.class, 
-				"idfilm = " + filmId );
-		
-		return exemplaires.get(0);//retourne le premier qu'il trouve, donc il faut absolument qu'il en a!
-	}
-	
 	public void louer(){
 		
 		if(checkNombreDeFilmDejaSortiParLeUser() + listExemplaire.size() <= user.getForfait().getLocationmax().intValue()){
