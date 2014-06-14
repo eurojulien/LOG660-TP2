@@ -28,7 +28,7 @@
         <property name="image" type="string">
             <column name="IMAGE" length="400" />
         </property>
-        <set name="payses" table="FILMPAYS" inverse="false" lazy="true" fetch="select">
+        <set name="payses" table="FILMPAYS" inverse="false" lazy="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
@@ -36,7 +36,7 @@
                 <column name="IDPAYS" precision="38" scale="0" not-null="true" />
             </many-to-many>
         </set>
-        <set name="genres" table="FILMGENRE" inverse="false" lazy="true" fetch="select">
+        <set name="genres" table="FILMGENRE" inverse="false" lazy="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
@@ -44,19 +44,19 @@
                 <column name="IDGENRE" precision="38" scale="0" not-null="true" />
             </many-to-many>
         </set>
-        <set name="annonces" table="ANNONCE" inverse="true" lazy="true" fetch="select">
+        <set name="annonces" table="ANNONCE" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
             <one-to-many class="modele.Annonce" />
         </set>
-        <set name="implications" table="IMPLICATION" inverse="true" lazy="true" fetch="select">
+        <set name="implications" table="IMPLICATION" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
             <one-to-many class="modele.Implication" />
         </set>
-        <set name="exemplaires" table="EXEMPLAIRE" inverse="true" lazy="true" fetch="select">
+        <set name="exemplaires" table="EXEMPLAIRE" inverse="true" lazy="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>

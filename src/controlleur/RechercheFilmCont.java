@@ -1,6 +1,7 @@
 package controlleur;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import modele.Exemplaire;
 import modele.Film;
@@ -51,22 +52,42 @@ public class RechercheFilmCont {
 	}
 
 	public void addLoction(int selectedIndex) {
-		System.out.println("Film selected to rent: " + filmResltat.get(selectedIndex).getTitre());
+		//System.out.println("Film selected to rent: " + filmResltat.get(selectedIndex).getTitre());
 		
 		//Check pour un exemplaire disponible!
-		Facade f = Facade.getFacade();
+		/*Facade f = Facade.getFacade();
 		int idfilm = filmResltat.get(selectedIndex).getIdfilm().intValue();
 		ArrayList<Exemplaire> listExemplaire = (ArrayList<Exemplaire>)f.getObjects(Exemplaire.class, 
 													"idfilm = " + idfilm, 
 													"disponible = " + 1); //1 pour true
-		
-		if(listExemplaire.isEmpty()){
+		*/
+		/*if(listExemplaire.isEmpty()){
 			listFilmGui.showErrorMessage("Aucune exemplaire de ce film sont disponible");
 		}
 		else{
 			louerControlleur.ajouterFilmALouer(listExemplaire.get(0));
 			userClosedWindowRechercher();
+		}*/
+		
+		//better way, since hibernate has the objects already
+		Film film = filmResltat.get(selectedIndex);
+		
+		ArrayList<Exemplaire> theList = new ArrayList<Exemplaire>();
+		theList.addAll(film.getExemplaires());
+		for(int i = 0; i < theList.size(); i++){
+			Exemplaire exem = theList.get(i);
+			if(exem.isDisponible()){
+				louerControlleur.ajouterFilmALouer(exem);
+				userClosedWindowRechercher();
+				break;
+			}
+			if(!exem.isDisponible() && i == theList.size()-1)//
+			{
+				listFilmGui.showErrorMessage("Aucune exemplaire de ce film sont disponible");
+				break;
+			}
 		}
+		
 
 	}
 
