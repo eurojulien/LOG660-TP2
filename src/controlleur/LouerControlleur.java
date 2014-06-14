@@ -3,6 +3,7 @@ package controlleur;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import vue.ListFilmLouer;
 import modele.Exemplaire;
 import modele.Film;
 import modele.Locationfilm;
@@ -14,9 +15,9 @@ public class LouerControlleur {
 	private Utilisateur user;
 	
 	private MenuControlleur menucont;
-	//private RechercheFilmCont reFilmCont;
+	private RechercheFilmCont recheFilmCont;
 	
-	//private LoyerGui loyerGui;
+	private ListFilmLouer listFilmLouerGui;
 	
 	ArrayList<Film> listFilm;
 	
@@ -24,14 +25,16 @@ public class LouerControlleur {
 		this.menucont = menucont;
 		this.user = user;
 		this.listFilm = new ArrayList<Film>();
+		this.listFilmLouerGui = new ListFilmLouer(this);
+		this.recheFilmCont = new RechercheFilmCont(this);
 	}
 
 	public void showGui() {
-		//loyerGui.setVisible(true);
+		listFilmLouerGui.setVisible(true);
 	}
 	
 	public void hideGui(){
-		//loyerGui.setVisible(false);
+		listFilmLouerGui.setVisible(false);
 	}
 	
 	public void userClosedWindow() {
@@ -41,17 +44,20 @@ public class LouerControlleur {
 	
 	public int checkNombreDeFilmDejaSorti(){
 		int num = 0;
-		
+		//TODO
 		return num;
 	}
 	
 	public void ajouterFilmALouer(Film film){
 		listFilm.add(film);
-		//loyerGui.addFilmALaVue(film.getTitre());
+		listFilmLouerGui.clearList();
+		for(Film f : listFilm){
+			listFilmLouerGui.addFilm(f.getTitre(), null);
+		}
 	}
 	
-	public void enleverFilm(){
-		//TODO
+	public void enleverFilm(int index){
+		listFilm.remove(index);
 	}
 	
 	public Exemplaire getExmplaireDisponiblePourFilm(int filmId){
@@ -60,7 +66,7 @@ public class LouerControlleur {
 		ArrayList<Exemplaire> exemplaires = (ArrayList<Exemplaire>) f.getObjects(Exemplaire.class, 
 				"idfilm = " + filmId );
 		
-		return exemplaires.get(0);
+		return exemplaires.get(0);//retourne le premier qu'il trouve, donc il faut absolument qu'il en a!
 	}
 	
 	public void louer(){
@@ -95,10 +101,18 @@ public class LouerControlleur {
 				//doive entre commit dans la meme transaction
 			}
 			
+			userClosedWindow();
+			
 		}
 		else{
-			//loyerGui.setTextOnlblMessage("Vous ne pouvez pas sortir au tants de film avec votre forfait. " + 
-			//								"SVP retourner des films ou enlever des films de vous choix de location");
+			listFilmLouerGui.showErrorMessage("Vous ne pouvez pas sortir au tants de film avec votre forfait. " + 
+											"SVP retourner des films ou enlever des films de vous choix de location");
 		}
+	}
+
+	public void partirRecherche() {
+		hideGui();
+		recheFilmCont.showGuiRecherche();
+		
 	}
 }
