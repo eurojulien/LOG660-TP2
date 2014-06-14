@@ -19,11 +19,13 @@ import javax.swing.SwingConstants;
 
 
 
+
 //import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Label;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
@@ -33,6 +35,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import javax.swing.border.BevelBorder;
 
+import modele.Pays;
+import controlleur.Facade;
 import controlleur.RechercheFilmCont;
 
 public class RechercherFilm extends JFrame {
@@ -41,6 +45,7 @@ public class RechercherFilm extends JFrame {
 	private JTextField txtNomFilm;
 	private JTextField txtDateDebut;
 	private JTextField txtDateFin;
+	private JComboBox comboBox_Pays;
 
 	private RechercheFilmCont rechercheFilmCont;
 	/**
@@ -158,7 +163,7 @@ public class RechercherFilm extends JFrame {
 		lblEt.setBounds(329, 120, 54, 19);
 		panel.add(lblEt);
 		
-		JComboBox comboBox_Pays = new JComboBox();
+		comboBox_Pays = new JComboBox();
 		comboBox_Pays.setBounds(224, 166, 142, 20);
 		panel.add(comboBox_Pays);
 		
@@ -177,9 +182,15 @@ public class RechercherFilm extends JFrame {
 		JComboBox comboBox_Langue = new JComboBox();
 		comboBox_Langue.setBounds(222, 216, 144, 20);
 		panel.add(comboBox_Langue);
+
 	}
 	
 	public void showErrorMessage(String string) {
 		JOptionPane.showMessageDialog(null, string, "Erreur", JOptionPane.ERROR_MESSAGE);	
+	}
+	
+	
+	public void addPays(String pays){
+		comboBox_Pays.addItem(pays);
 	}
 }

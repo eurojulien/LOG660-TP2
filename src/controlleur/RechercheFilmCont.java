@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import modele.Exemplaire;
 import modele.Film;
+import modele.Pays;
 import vue.ListFilm;
 import vue.RechercherFilm;
 
@@ -16,12 +17,15 @@ public class RechercheFilmCont {
 	private ListFilm	listFilmGui;
 	
 	private ArrayList<Film> filmResltat;
+	private ArrayList<Pays> pays;
 	
 	public RechercheFilmCont(LouerControlleur louerControlleur) {
 		this.louerControlleur = louerControlleur;
 		this.rechercherFilmGui = new RechercherFilm(this);
 		this.listFilmGui = new ListFilm(this);
 		this.filmResltat = new ArrayList<Film>();
+		
+		loadPays();
 	}
 
 	public void showGuiRecherche() {
@@ -97,7 +101,7 @@ public class RechercheFilmCont {
 		Facade f = Facade.getFacade();
 		
 		filmResltat = (ArrayList<Film>) f.getObjects(Film.class, 
-										"titre = '" + titre + "'");
+										"titre LIKE '%" + titre + "%'");
 		if(filmResltat.isEmpty())
 			rechercherFilmGui.showErrorMessage("Aucun film trouver.");
 		else{
@@ -108,5 +112,15 @@ public class RechercheFilmCont {
 			showGuiResultat();
 		}
 
+	}
+	
+	public void loadPays(){
+		
+		Facade f = Facade.getFacade();
+		ArrayList<Pays> pays = (ArrayList<Pays>) f.getAllObjects(Pays.class);
+		
+		for (Pays p : pays){
+			rechercherFilmGui.addPays(p.getNompays());
+		}
 	}
 }
