@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-06-10 09:48:21 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="modele.VueFilm" table="VUE_FILM">
+        <composite-id name="id" class="modele.VueFilmId">
+            <key-property name="idfilm" type="big_decimal">
+                <column name="IDFILM" precision="38" scale="0" />
+            </key-property>
+            <key-property name="titre" type="string">
+                <column name="TITRE" length="100" />
+            </key-property>
+            <key-property name="anneesortie" type="short">
+                <column name="ANNEESORTIE" precision="4" scale="0" />
+            </key-property>
+            <key-property name="nompays" type="string">
+                <column name="NOMPAYS" length="50" />
+            </key-property>
+            <key-property name="langue" type="string">
+                <column name="LANGUE" length="50" />
+            </key-property>
+            <key-property name="libellegenre" type="string">
+                <column name="LIBELLEGENRE" length="50" />
+            </key-property>
+            <key-property name="nomprenom" type="string">
+                <column name="NOMPRENOM" length="101" />
+            </key-property>
+            <key-property name="typepersonne" type="string">
+                <column name="TYPEPERSONNE" length="50" />
+            </key-property>
+            <key-property name="resume" type="string">
+                <column name="RESUME" length="500" />
+            </key-property>
+        </composite-id>
+        </class>
+</hibernate-mapping>

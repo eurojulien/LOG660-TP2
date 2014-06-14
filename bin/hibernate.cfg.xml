@@ -23,5 +23,6 @@
         <mapping resource="modele/Implication.hbm.xml" />
         <mapping resource="modele/Typepersonne.hbm.xml" />
         <mapping resource="modele/Exemplaire.hbm.xml" />
+        <mapping resource="modele/VueFilm.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
