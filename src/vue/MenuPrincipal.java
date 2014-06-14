@@ -31,7 +31,7 @@ import controlleur.MenuControlleur;
 public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
-	private JLabel lbl_Id;
+	private JLabel lbl_Nom;
 	
 	private MenuControlleur menuControlleur;
 
@@ -62,16 +62,16 @@ public class MenuPrincipal extends JFrame {
 		panel.setLayout(null);
 		
 		
-		JLabel lblNomUtilisateur = new JLabel("ID :");
+		JLabel lblNomUtilisateur = new JLabel("Client :");
 		lblNomUtilisateur.setFont(new Font("Verdana", Font.BOLD, 13));
 		lblNomUtilisateur.setBounds(10, 38, 52, 17);
 		panel.add(lblNomUtilisateur);
 		
-		lbl_Id = new JLabel("");
-		lbl_Id.setBackground(Color.LIGHT_GRAY);
-		lbl_Id.setFont(new Font("Verdana", Font.BOLD, 13));
-		lbl_Id.setBounds(51, 38, 135, 17);
-		panel.add(lbl_Id);
+		lbl_Nom = new JLabel("");
+		lbl_Nom.setBackground(Color.LIGHT_GRAY);
+		lbl_Nom.setFont(new Font("Verdana", Font.BOLD, 13));
+		lbl_Nom.setBounds(72, 38, 193, 17);
+		panel.add(lbl_Nom);
 		
 		JButton btn_Gestion_Client = new JButton("Gestion des clients");
 		btn_Gestion_Client.setEnabled(false);
@@ -99,6 +99,11 @@ public class MenuPrincipal extends JFrame {
 		panel.add(btnGestionForfaits);
 		
 		JButton btnGestionDesLocations = new JButton("Gestion des locations");
+		btnGestionDesLocations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				menuControlleur.afficherLocationsMenu();
+			}
+		});
 		btnGestionDesLocations.setFont(new Font("Verdana", Font.BOLD, 13));
 		btnGestionDesLocations.setBounds(68, 211, 197, 44);
 		panel.add(btnGestionDesLocations);
@@ -114,7 +119,7 @@ public class MenuPrincipal extends JFrame {
 		panel.add(btnAnnuler);
 	}
 	
-	public void setUserInfo(String id){
-		lbl_Id.setText(id);
+	public void setUserInfo(String nom){
+		lbl_Nom.setText(nom);
 	}
 }

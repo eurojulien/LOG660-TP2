@@ -2,7 +2,10 @@ package controlleur;
 
 import java.util.ArrayList;
 
+import net.sf.hibernate.Hibernate;
+import net.sf.hibernate.HibernateException;
 import vue.Login;
+import modele.Forfait;
 import modele.Utilisateur;
 
 public class LoginControlleur{
@@ -49,6 +52,7 @@ public class LoginControlleur{
 		
 		if(!users.isEmpty()){
 			user = users.get(0);
+			System.out.println("Forfait: " + user.getForfait().getNom());
 			hideGui(); //hide the login screen
 			menuControlleur = new MenuControlleur(this);
 			menuControlleur.showGui(); //show the main menu
@@ -56,12 +60,6 @@ public class LoginControlleur{
 		{
 			loginGui.setTextOnlblMessage("Error: Nom d'utilisateur ou/et Mot de passe invalide!");
 		}
-		
-		//		ArrayList<Film> films = (ArrayList<Film>) facade.getObjects(Film.class, "idFilm = 34492");
-		//		System.out.println("Film : " + films.get(0).getResume());
-		//		
-		//		ArrayList<Exemplaire> exe = (ArrayList<Exemplaire>) facade.getObjects(Exemplaire.class,"idFilm = " + films.get(0).getIdfilm().toPlainString());
-		//		System.out.println("Exemplaires : " + exe.get(0).getIdexemplaire());
 		
 	}
 	

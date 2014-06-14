@@ -16,7 +16,7 @@ public class Forfait implements java.io.Serializable {
 	private BigDecimal coutforfait;
 	private BigDecimal locationmax;
 	private BigDecimal dureemax;
-	private Set utilisateurs = new HashSet(0);
+	//private Set utilisateurs = new HashSet(0);
 
 	public Forfait() {
 	}
@@ -38,6 +38,7 @@ public class Forfait implements java.io.Serializable {
 		this.dureemax = dureemax;
 	}
 
+	/*
 	public Forfait(BigDecimal idforfait, String nom, BigDecimal coutforfait,
 			BigDecimal locationmax, BigDecimal dureemax, Set utilisateurs) {
 		this.idforfait = idforfait;
@@ -56,7 +57,8 @@ public class Forfait implements java.io.Serializable {
 		this.dureemax = dureemax;
 		this.utilisateurs = utilisateurs;
 	}
-
+	*/
+	
 	public BigDecimal isIdforfait() {
 		return this.idforfait;
 	}
@@ -97,6 +99,7 @@ public class Forfait implements java.io.Serializable {
 		this.dureemax = dureemax;
 	}
 
+	/*
 	public Set getUtilisateurs() {
 		return this.utilisateurs;
 	}
@@ -104,5 +107,5 @@ public class Forfait implements java.io.Serializable {
 	public void setUtilisateurs(Set utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
-
+	 */
 }

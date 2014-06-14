@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -84,7 +85,7 @@ public class Facade<T> {
 	/*
 	 * Sauvegarde ou met a jour tout objet !
 	 */
-	public void saveOrUpdateObject( Class<T> classType, Object object){
+	public void saveOrUpdateObject(Class<T> classType, Object object){
 		try{
 			beginTransaction();
 			session.saveOrUpdate((T) object);
@@ -162,7 +163,6 @@ public class Facade<T> {
 	public void closeSessionForExit(){
 		sessionFactory.close();
 	}
-	
 	
 	/*public ArrayList<Film> getFilms(String... parameters){
 

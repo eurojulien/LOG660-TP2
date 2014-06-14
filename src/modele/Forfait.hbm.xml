@@ -22,11 +22,11 @@
         <property name="dureemax" type="big_decimal">
             <column name="DUREEMAX" precision="38" scale="0" not-null="true" />
         </property>
-        <set name="utilisateurs" table="UTILISATEUR" inverse="true" lazy="true" fetch="select">
+        <!-- <set name="utilisateurs" table="UTILISATEUR" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="IDFORFAIT" precision="1" scale="0" />
             </key>
             <one-to-many class="modele.Utilisateur" />
-        </set>
+        </set> -->
     </class>
 </hibernate-mapping>
