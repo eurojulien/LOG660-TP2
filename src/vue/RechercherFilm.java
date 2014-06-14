@@ -7,23 +7,31 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JPasswordField;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 
 //import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Label;
+
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import javax.swing.border.BevelBorder;
+
+import controlleur.RechercheFilmCont;
 
 public class RechercherFilm extends JFrame {
 
@@ -32,11 +40,14 @@ public class RechercherFilm extends JFrame {
 	private JTextField txtDateDebut;
 	private JTextField txtDateFin;
 
-
+	private RechercheFilmCont rechercheFilmCont;
 	/**
 	 * Create the frame.
+	 * @param rechercheFilmCont 
 	 */
-	public RechercherFilm() {
+	public RechercherFilm(final RechercheFilmCont rechercheFilmCont) {
+		this.rechercheFilmCont = rechercheFilmCont;
+		setVisible(false);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, -21, 545, 519);

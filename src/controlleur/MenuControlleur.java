@@ -30,8 +30,8 @@ public class MenuControlleur {
 	}
 
 	public void afficherLocationsMenu() {
-		//hideGui();
-		//loyerControlleur = new LouerControlleur(this, loginControlleur.getUser());
-		//loyerControlleur.showGui();
+		hideGui();
+		loyerControlleur = new LouerControlleur(this, loginControlleur.getUser());
+		loyerControlleur.showGui();
 	}
 }
