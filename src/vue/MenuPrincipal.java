@@ -101,7 +101,7 @@ public class MenuPrincipal extends JFrame {
 		JButton btnGestionDesLocations = new JButton("Gestion des locations");
 		btnGestionDesLocations.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				menuControlleur.afficherLocationsMenu();
 			}
 		});
 		btnGestionDesLocations.setFont(new Font("Verdana", Font.BOLD, 13));
