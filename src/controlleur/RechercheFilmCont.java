@@ -3,8 +3,12 @@ package controlleur;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import modele.Annonce;
 import modele.Exemplaire;
 import modele.Film;
+import modele.Genre;
+import modele.Implication;
+import modele.Pays;
 import vue.ListFilm;
 import vue.RechercherFilm;
 
@@ -102,11 +106,50 @@ public class RechercheFilmCont {
 			rechercherFilmGui.showErrorMessage("Aucun film trouver.");
 		else{
 			for(Film film: filmResltat){
-				listFilmGui.addFilm(film.getTitre());
+				listFilmGui.addFilm(film.getTitre());	
 			}
 			hideGuiRecherche();
 			showGuiResultat();
 		}
 
+	}
+	
+	public void affichierFicheFilm(int index){
+		Film film = filmResltat.get(index);
+		System.out.println("Film :" + film.getTitre());
+		System.out.println("Langue :" + film.getLangue());
+		System.out.println("Image :" + film.getImage());
+		System.out.println("Resume :" + film.getResume());
+		System.out.println("Anneesortie :" + film.getAnneesortie());
+		System.out.println("Duree :" + film.getDuree());
+		System.out.println("Idfilm :" + film.getIdfilm());
+		
+		ArrayList<Annonce> listAnnonce = new ArrayList<Annonce>();
+		listAnnonce.addAll(film.getAnnonces());
+		for(Annonce a : listAnnonce){
+			System.out.println("Annonce :" + a.getAnnounce());
+		}
+		
+		ArrayList<Genre> listGenre = new ArrayList<Genre>();
+		listGenre.addAll(film.getGenres());
+		for(Genre g : listGenre){
+			System.out.println("Genre :" + g.getLibellegenre());
+		}
+		
+		ArrayList<Pays> listPays = new ArrayList<Pays>();
+		listPays.addAll(film.getPayses());
+		for(Pays p : listPays){
+			System.out.println("Genre :" + p.getNompays());
+		}
+		
+		ArrayList<Implication> listImp = new ArrayList<Implication>();
+		listImp.addAll(film.getImplications());
+		for(Implication i : listImp){
+			System.out.println("Type Personne: " + i.getTypepersonne().getTypepersonne());
+			System.out.println("Nom :" + i.getPersonne().getPrenom() + " " + i.getPersonne().getNom());
+			if(i.getPersonne().getDatedenaissance() != null)
+				System.out.println("DateAnniv. :" + i.getPersonne().getDatedenaissance().toString());
+			System.out.println("Personnage: " + i.getPersonnage());
+		}
 	}
 }

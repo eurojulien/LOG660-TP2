@@ -49,7 +49,7 @@ public class ListFilm extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		JButton btn_New_Recherche = new JButton("Nouvelle recherche");
-		btn_New_Recherche.setBounds(22, 426, 189, 44);
+		btn_New_Recherche.setBounds(22, 426, 173, 44);
 		btn_New_Recherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rechercheFilmCont.userClosedWindowResultat();
@@ -102,10 +102,25 @@ public class ListFilm extends JFrame {
 			}
 		});
 		btn_Louer.setFont(new Font("Verdana", Font.BOLD, 13));
-		btn_Louer.setBounds(282, 426, 121, 44);
+		btn_Louer.setBounds(221, 426, 107, 44);
 		
 		panel.add(list);
 		panel.add(btn_Louer);
+		
+		JButton btnFicheFilm = new JButton("Fiche Film");
+		btnFicheFilm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(list.isSelectionEmpty()){
+					showErrorMessage("Aucun film selectionner.");
+				}
+				else{
+					rechercheFilmCont.affichierFicheFilm(list.getSelectedIndex());
+				}
+			}
+		});
+		btnFicheFilm.setFont(new Font("Verdana", Font.BOLD, 13));
+		btnFicheFilm.setBounds(353, 426, 112, 44);
+		panel.add(btnFicheFilm);
 	}
 	
 	public void clearList(){

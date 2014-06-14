@@ -15,13 +15,13 @@
                 <column name="IDTYPEPERSONNE" precision="38" scale="0" />
             </key-property>
         </composite-id>
-        <many-to-one name="typepersonne" class="modele.Typepersonne" update="false" insert="false" fetch="select">
+        <many-to-one name="typepersonne" class="modele.Typepersonne" update="false" insert="false" fetch="select" lazy="false">
             <column name="IDTYPEPERSONNE" precision="38" scale="0" not-null="true" />
         </many-to-one>
         <many-to-one name="film" class="modele.Film" update="false" insert="false" fetch="select">
             <column name="IDFILM" precision="38" scale="0" not-null="true" />
         </many-to-one>
-        <many-to-one name="personne" class="modele.Personne" update="false" insert="false" fetch="select">
+        <many-to-one name="personne" class="modele.Personne" update="false" insert="false" fetch="select" lazy="false">
             <column name="IDPERSONNE" precision="38" scale="0" not-null="true" />
         </many-to-one>
         <property name="personnage" type="string">
