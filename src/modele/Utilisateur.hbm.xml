@@ -10,7 +10,7 @@
             	<param name="sequence">UTILISATEUR_SEQ</param>
             </generator>
         </id>
-        <many-to-one name="forfait" class="modele.Forfait" fetch="select" lazy="false">
+        <many-to-one name="forfait" class="modele.Forfait" fetch="select" >
             <column name="IDFORFAIT" precision="38" scale="0" />
         </many-to-one>
         <property name="nomfamille" type="string">

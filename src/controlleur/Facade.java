@@ -27,7 +27,7 @@ import java.math.BigDecimal;
 public class Facade<T> {
 
 	private static Session session;
-	private static Transaction transaction;
+	//private static Transaction transaction;
 	private static SessionFactory sessionFactory;
 	private static ServiceRegistry serviceRegistry;
 	
@@ -41,6 +41,8 @@ public class Facade<T> {
 			configuration.configure();
 			serviceRegistry 			= new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 			sessionFactory 				= configuration.buildSessionFactory(serviceRegistry);
+			session 					= sessionFactory.openSession();
+
 		}
 
 		catch(Throwable ex){
@@ -49,26 +51,25 @@ public class Facade<T> {
 			System.err.println("CAUSE   : " + ex.getCause());
 		}
 		
-		session		= null;
-		transaction	= null;
 	}
 	
 	/*
 	 * Demarre une session/Transaction avant une action avec la base de donnees
 	 */
-	private void beginTransaction(){
-		session = sessionFactory.openSession();
-		transaction	= session.beginTransaction();
-	}
+	/*private void beginTransaction(){
+		//session = sessionFactory.openSession();
+		//transaction	= session.beginTransaction();
+		session.beginTransaction();
+	}/*
 	
 	/*
 	 * Ferme une session/Transaction apres une action avec la base de donnees
 	 */
-	private void endTransaction(){
-		transaction = null;
-		session.close();
-		
-	}
+	/*private void endTransaction(){
+		//transaction = null;
+		//session.close();
+		session.getTransaction().commit();
+	}*/
 	
 	/*
 	 * Singleton concept
@@ -87,17 +88,15 @@ public class Facade<T> {
 	 */
 	public void saveOrUpdateObject(Class<T> classType, Object object){
 		try{
-			beginTransaction();
+			session.beginTransaction();
 			session.saveOrUpdate((T) object);
-			transaction.commit();
+			session.getTransaction().commit();
 		}
 		catch(HibernateException e){
-			transaction.rollback();
+			session.getTransaction().rollback();
 			System.out.println("ERREUR DURANT LA SAUVEGARDE (" + classType + ") : " + e);
 		}
-		finally{
-			endTransaction();
-		}
+
 	}
 	
 	/*
@@ -109,8 +108,7 @@ public class Facade<T> {
 		List<T> objects = null;
 		String sqlQuery = "from " + classType.getCanonicalName() + " where";
 		try{
-			beginTransaction();
-			
+			session.beginTransaction();
 			for (int i = 0; i < parameters.length; i++){
 				sqlQuery += " " + parameters[i];
 				if(i < parameters.length - 1){
@@ -120,17 +118,14 @@ public class Facade<T> {
 			
 			Query query = session.createQuery(sqlQuery);
 			objects = (List<T>) query.list();
-			transaction.commit();
+			session.getTransaction().commit();
 		}
 		
 		catch(HibernateException e){
-			transaction.rollback();
+			session.getTransaction().rollback();
 			System.out.println("ERREUR DURANT LA RECUPERATION (" + classType + ", SQL : " + sqlQuery + ") : " + e);
 		}
 		
-		finally{
-			endTransaction();
-		}
 		
 		return objects;
 	}
@@ -143,25 +138,32 @@ public class Facade<T> {
 		List<T> objects = null;
 		
 		try{
-			beginTransaction();
+			session.beginTransaction();
 			objects = (List<T>) session.createCriteria(classType).list();
-			transaction.commit();
+			session.getTransaction().commit();
 		}
 		
 		catch(HibernateException e){
-			transaction.rollback();
+			session.getTransaction().rollback();
 			System.out.println("ERREUR DURANT LES RECUPERATIONS (" + classType + ") : " + e);
-		}
-		
-		finally{
-			endTransaction();
 		}
 		
 		return objects;
 	}
 	
 	public void closeSessionForExit(){
+		session.close();
 		sessionFactory.close();
+	}
+	
+	public void initHibernateFilm(Object o){
+		try{
+			Hibernate.initialize(o);
+		}
+		catch(HibernateException e){
+			System.out.println("ERREUR DURANT LES RECUPERATIONS (avec Hibernate.initlize) : " + e);
+		}
+		
 	}
 	
 	/*public ArrayList<Film> getFilms(String... parameters){

@@ -13,22 +13,22 @@
         <property name="titre" type="string">
             <column name="TITRE" length="100" not-null="true" />
         </property>
-        <property name="anneesortie" type="short">
+        <property name="anneesortie" type="short" lazy="true">
             <column name="ANNEESORTIE" precision="4" scale="0" not-null="true" />
         </property>
-        <property name="langue" type="string">
+        <property name="langue" type="string" lazy="true">
             <column name="LANGUE" length="50" />
         </property>
-        <property name="duree" type="big_decimal">
+        <property name="duree" type="big_decimal" lazy="true">
             <column name="DUREE" precision="38" scale="0" not-null="true" />
         </property>
-        <property name="resume" type="string">
+        <property name="resume" type="string" lazy="true">
             <column name="RESUME" length="500" not-null="true" />
         </property>
         <property name="image" type="string">
             <column name="IMAGE" length="400" />
         </property>
-        <set name="payses" table="FILMPAYS" inverse="false" lazy="false" fetch="select">
+        <set name="payses" table="FILMPAYS" inverse="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
@@ -36,7 +36,7 @@
                 <column name="IDPAYS" precision="38" scale="0" not-null="true" />
             </many-to-many>
         </set>
-        <set name="genres" table="FILMGENRE" inverse="false" lazy="false" fetch="select">
+        <set name="genres" table="FILMGENRE" inverse="false" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
@@ -44,19 +44,19 @@
                 <column name="IDGENRE" precision="38" scale="0" not-null="true" />
             </many-to-many>
         </set>
-        <set name="annonces" table="ANNONCE" inverse="true" lazy="false" fetch="select">
+        <set name="annonces" table="ANNONCE" inverse="true" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
             <one-to-many class="modele.Annonce" />
         </set>
-        <set name="implications" table="IMPLICATION" inverse="true" lazy="false" fetch="select">
+        <set name="implications" table="IMPLICATION" inverse="true" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>
             <one-to-many class="modele.Implication" />
         </set>
-        <set name="exemplaires" table="EXEMPLAIRE" inverse="true" lazy="false" fetch="select">
+        <set name="exemplaires" table="EXEMPLAIRE" inverse="true" fetch="select">
             <key>
                 <column name="IDFILM" precision="38" scale="0" not-null="true" />
             </key>

@@ -49,7 +49,7 @@ public class ListFilm extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		JButton btn_New_Recherche = new JButton("Nouvelle recherche");
-		btn_New_Recherche.setBounds(22, 426, 173, 44);
+		btn_New_Recherche.setBounds(10, 426, 185, 44);
 		btn_New_Recherche.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rechercheFilmCont.userClosedWindowResultat();

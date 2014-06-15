@@ -102,8 +102,8 @@ public class RechercheFilmCont {
 		Facade f = Facade.getFacade();
 		
 		filmResltat = (ArrayList<Film>) f.getObjects(Film.class, 
-										"titre LIKE '%" + titre + "%'", 
-										"langue = '" + langue + "'");
+										"titre LIKE '%" + titre + "%'"/*, 
+										"langue = '" + langue + "'"*/);
 		if(filmResltat.isEmpty())
 			rechercherFilmGui.showErrorMessage("Aucun film trouver.");
 		else{
@@ -118,6 +118,7 @@ public class RechercheFilmCont {
 	
 	public void affichierFicheFilm(int index){
 		Film film = filmResltat.get(index);
+		
 		System.out.println("Film :" + film.getTitre());
 		System.out.println("Langue :" + film.getLangue());
 		System.out.println("Image :" + film.getImage());
@@ -125,6 +126,7 @@ public class RechercheFilmCont {
 		System.out.println("Anneesortie :" + film.getAnneesortie());
 		System.out.println("Duree :" + film.getDuree());
 		System.out.println("Idfilm :" + film.getIdfilm());
+	
 		
 		ArrayList<Annonce> listAnnonce = new ArrayList<Annonce>();
 		listAnnonce.addAll(film.getAnnonces());
