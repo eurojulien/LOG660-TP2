@@ -46,6 +46,10 @@ public class RechercherFilm extends JFrame {
 	private JTextField txtDateDebut;
 	private JTextField txtDateFin;
 	private JComboBox comboBox_Pays;
+	private JComboBox comboBox_Genre;
+	private JComboBox comboBox_Realisateur;
+	private JComboBox comboBox_Acteur;
+	private JComboBox comboBox_Langue;
 
 	private RechercheFilmCont rechercheFilmCont;
 	/**
@@ -100,7 +104,7 @@ public class RechercherFilm extends JFrame {
 		JButton btn_Rechercher = new JButton("Rechecher");
 		btn_Rechercher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText());
+				rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText(), comboBox_Langue.getSelectedItem().toString());
 			}
 		});
 		btn_Rechercher.setBounds(57, 437, 117, 44);
@@ -167,19 +171,22 @@ public class RechercherFilm extends JFrame {
 		comboBox_Pays.setBounds(224, 166, 142, 20);
 		panel.add(comboBox_Pays);
 		
-		JComboBox comboBox_Genre = new JComboBox();
+		comboBox_Genre = new JComboBox();
 		comboBox_Genre.setBounds(224, 274, 144, 20);
 		panel.add(comboBox_Genre);
 		
-		JComboBox comboBox_Realisateur = new JComboBox();
+		comboBox_Realisateur = new JComboBox();
 		comboBox_Realisateur.setBounds(222, 320, 146, 20);
 		panel.add(comboBox_Realisateur);
 		
-		JComboBox comboBox_Acteur = new JComboBox();
+		comboBox_Acteur = new JComboBox();
 		comboBox_Acteur.setBounds(222, 360, 146, 20);
 		panel.add(comboBox_Acteur);
 		
-		JComboBox comboBox_Langue = new JComboBox();
+		comboBox_Langue = new JComboBox();
+		comboBox_Langue.addItem("");
+		comboBox_Langue.addItem("English");
+		comboBox_Langue.addItem("Italian");
 		comboBox_Langue.setBounds(222, 216, 144, 20);
 		panel.add(comboBox_Langue);
 
@@ -192,5 +199,22 @@ public class RechercherFilm extends JFrame {
 	
 	public void addPays(String pays){
 		comboBox_Pays.addItem(pays);
+	}
+	
+	public void addGenre(String genre){
+		comboBox_Genre.addItem(genre);
+	}
+	
+	public void addLangue(String langue){
+		comboBox_Langue.addItem(langue);
+	}
+	
+	
+	public void addRealisateur(String realisateur){
+		comboBox_Realisateur.addItem(realisateur);
+	}
+	
+	public void addActeur(String acteur){
+		comboBox_Acteur.addItem(acteur);
 	}
 }

@@ -3,12 +3,7 @@ package controlleur;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import modele.Annonce;
-import modele.Exemplaire;
-import modele.Film;
-import modele.Genre;
-import modele.Implication;
-import modele.Pays;
+import modele.*;
 import vue.ListFilm;
 import vue.RechercherFilm;
 
@@ -26,6 +21,12 @@ public class RechercheFilmCont {
 		this.rechercherFilmGui = new RechercherFilm(this);
 		this.listFilmGui = new ListFilm(this);
 		this.filmResltat = new ArrayList<Film>();
+		
+		loadPays();
+		loadRenre();
+		//loadlangue();
+		//loadActeurs();
+//		loadRealisateur();
 	}
 
 	public void showGuiRecherche() {
@@ -95,13 +96,14 @@ public class RechercheFilmCont {
 
 	}
 
-	public void rechercheFilmParTitre(String titre){
+	public void rechercheFilmParTitre(String titre, String langue){
 		listFilmGui.clearList();
 		
 		Facade f = Facade.getFacade();
 		
 		filmResltat = (ArrayList<Film>) f.getObjects(Film.class, 
-										"titre = '" + titre + "'");
+										"titre LIKE '%" + titre + "%'", 
+										"langue = '" + langue + "'");
 		if(filmResltat.isEmpty())
 			rechercherFilmGui.showErrorMessage("Aucun film trouver.");
 		else{
@@ -152,4 +154,61 @@ public class RechercheFilmCont {
 			System.out.println("Personnage: " + i.getPersonnage());
 		}
 	}
+	
+	public void loadPays(){
+		
+		Facade f = Facade.getFacade();
+		ArrayList<Pays> pays = (ArrayList<Pays>) f.getAllObjects(Pays.class);
+		
+		rechercherFilmGui.addPays("");
+		for (Pays p : pays){
+			rechercherFilmGui.addPays(p.getNompays());
+		}
+	}
+	
+	public void loadRenre(){
+		
+		Facade f = Facade.getFacade();
+		ArrayList<Genre> genres = (ArrayList<Genre>) f.getAllObjects(Genre.class);
+		
+		rechercherFilmGui.addGenre("");
+		for (Genre g : genres){
+			rechercherFilmGui.addGenre(g.getLibellegenre());
+		}
+	}
+	
+	public void loadlangue(){
+		
+		Facade f = Facade.getFacade();
+		ArrayList<Film> films = (ArrayList<Film>) f.getAllObjects(Film.class);
+		
+		rechercherFilmGui.addLangue("");
+		for (Film fi : films){
+			rechercherFilmGui.addLangue(fi.getLangue());
+		}
+	}
+	
+	public void loadActeurs(){
+		
+		Facade f = Facade.getFacade();
+		ArrayList<Personne> personnes = (ArrayList<Personne>) f.getAllObjects(Personne.class);
+		
+		rechercherFilmGui.addActeur("");
+		for (Personne p : personnes){
+			rechercherFilmGui.addActeur(p.getNom());
+		}
+	}
+	
+	public void loadRealisateur(){
+		
+		Facade f = Facade.getFacade();
+		ArrayList<Personne> personnes = (ArrayList<Personne>) f.getAllObjects(Personne.class);
+		
+		rechercherFilmGui.addRealisateur("");
+		for (Personne p : personnes){
+			rechercherFilmGui.addRealisateur(p.getNom());
+		}
+	}
+	
+	
 }
