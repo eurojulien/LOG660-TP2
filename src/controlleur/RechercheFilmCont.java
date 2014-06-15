@@ -99,6 +99,30 @@ public class RechercheFilmCont {
 		
 
 	}
+	
+	public void addLoction(Film film) {
+		
+		ArrayList<Exemplaire> theList = new ArrayList<Exemplaire>();
+		theList.addAll(film.getExemplaires());
+		for(int i = 0; i < theList.size(); i++){
+			Exemplaire exem = theList.get(i);
+			if(exem.isDisponible()){
+				louerControlleur.ajouterFilmALouer(exem);
+				ficheFilmGui.setVisible(false);
+				listFilmGui.setVisible(false);
+				rechercherFilmGui.setVisible(false);
+				louerControlleur.showGui();
+				break;
+			}
+			if(!exem.isDisponible() && i == theList.size()-1)//
+			{
+				listFilmGui.showErrorMessage("Aucune exemplaire de ce film sont disponible");
+				break;
+			}
+		}
+		
+
+	}
 
 	public void rechercheFilmParTitre(String titre, String langue){
 		listFilmGui.clearList();
@@ -161,13 +185,18 @@ public class RechercheFilmCont {
 			System.out.println("Personnage: " + i.getPersonnage());
 		}
 		*/
-		
-		ficheFilmGui = new FicheFilm(film);
+		hideGuiResultat();
+		ficheFilmGui = new FicheFilm(this, film);
 		ficheFilmGui.setVisible(true);
 	}
 	
-	@SuppressWarnings("unchecked")
+	public void userClosedFicheFilm() {
+		ficheFilmGui.setVisible(false);
+		showGuiResultat();
+	}
+	
 	public void loadPays(){
+		//http://stackoverflow.com/questions/5010537/java-swing-jcombobox-is-it-possible-to-have-hidden-data-for-each-item-in-the-l
 		
 		Facade f = Facade.getFacade();
 		
@@ -180,9 +209,6 @@ public class RechercheFilmCont {
 	        model.addElement( new Item(p.getIdpays().intValue(), p.getNompays() ) );
 	        rechercherFilmGui.addPays(model);
 		}
-		
-
-			
 
 	}
 	

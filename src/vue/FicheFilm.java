@@ -5,50 +5,86 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 import java.awt.Font;
-
-import javax.swing.JPasswordField;
-
 import java.awt.Color;
 
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
 
-
-//import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Desktop;
 import java.awt.SystemColor;
 import java.awt.Label;
 
-import javax.swing.JComboBox;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JTabbedPane;
-import javax.swing.JInternalFrame;
-import javax.swing.border.BevelBorder;
-import javax.swing.JEditorPane;
 import javax.swing.JList;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+
+import controlleur.Facade;
+import controlleur.RechercheFilmCont;
 import modele.Film;
+import modele.Annonce;
+import modele.Genre;
+import modele.Implication;
+import modele.Pays;
+
 
 public class FicheFilm extends JFrame {
 
 	private JPanel contentPane;
-
-
+	
+	private InformationPersonne infoPersonne;
+	
+	private RechercheFilmCont rechercheFilmCont;
+	
+	public class ItemJListImplication{
+		private Implication implication;
+		private String description;
+		
+		public ItemJListImplication(Implication implication, String descrition){
+			this.implication = implication;
+			this.description = descrition;
+		}
+		
+		public Implication getImpilication(){
+			return implication;
+		}
+		
+		public String getDescription(){
+			return description;
+		}
+		
+		public String toString(){
+			return description;
+		}
+	}
+	
 	/**
 	 * Create the frame.
+	 * @param rechercheFilmCont 
 	 * @param film 
 	 */
-	public FicheFilm(Film film) {
+	public FicheFilm(final RechercheFilmCont rechercheFilmCont, final Film film) {
+		this.rechercheFilmCont = rechercheFilmCont;
 		setVisible(false);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 50, 716, 647);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	rechercheFilmCont.userClosedFicheFilm();
+		    } 
+		});
+		setBounds(100, 50, 716, 651);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -58,10 +94,10 @@ public class FicheFilm extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		
 		JButton btn_initialiser = new JButton("Liste de recherche");
-		btn_initialiser.setBounds(494, 504, 167, 44);
+		btn_initialiser.setBounds(481, 504, 191, 44);
 		btn_initialiser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				rechercheFilmCont.userClosedFicheFilm();
 			}
 		});
 		btn_initialiser.setFont(new Font("Verdana", Font.BOLD, 13));
@@ -73,10 +109,20 @@ public class FicheFilm extends JFrame {
 		label.setBackground(Color.BLUE);
 		
 		JButton btn_Annuler = new JButton("Annuler");
+		btn_Annuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rechercheFilmCont.userClosedFicheFilm();
+			}
+		});
 		btn_Annuler.setBounds(589, 410, 107, 44);
 		btn_Annuler.setFont(new Font("Verdana", Font.BOLD, 13));
 		
 		JButton btn_Rechercher = new JButton("Loyer");
+		btn_Rechercher.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rechercheFilmCont.addLoction(film);
+			}
+		});
 		btn_Rechercher.setBounds(445, 410, 134, 44);
 		btn_Rechercher.setFont(new Font("Verdana", Font.BOLD, 13));
 		panel.setLayout(null);
@@ -94,11 +140,11 @@ public class FicheFilm extends JFrame {
 		panel.add(lbl_Titre_AnneeSortie);
 		
 		JLabel lbl_Titre_PaysProd = new JLabel("Pays de production :");
-		lbl_Titre_PaysProd.setBounds(41, 129, 107, 19);
+		lbl_Titre_PaysProd.setBounds(41, 129, 124, 19);
 		panel.add(lbl_Titre_PaysProd);
 		
-		JLabel lbl_Titre_langueOriginal = new JLabel("langue originale :");
-		lbl_Titre_langueOriginal.setBounds(41, 190, 84, 19);
+		JLabel lbl_Titre_langueOriginal = new JLabel("Langue originale :");
+		lbl_Titre_langueOriginal.setBounds(41, 190, 107, 19);
 		panel.add(lbl_Titre_langueOriginal);
 		
 		JLabel lbl_Titre_Duree = new JLabel("Durrée (min) :");
@@ -114,9 +160,8 @@ public class FicheFilm extends JFrame {
 		panel.add(lbl_Titre_Realisateur);
 		
 		Label lblTitre = new Label(film.getTitre());
-		lblTitre.setFont(new Font("Verdana", Font.BOLD | Font.ITALIC, 18));
+		lblTitre.setFont(new Font("Verdana", Font.PLAIN, 12));
 		lblTitre.setBackground(SystemColor.inactiveCaption);
-		lblTitre.setAlignment(Label.CENTER);
 		lblTitre.setBounds(164, 50, 230, 22);
 		panel.add(lblTitre);
 		
@@ -153,34 +198,150 @@ public class FicheFilm extends JFrame {
 		lbl_Titre_Resume.setBounds(41, 519, 84, 19);
 		panel.add(lbl_Titre_Resume);
 		
-		JEditorPane txt_Resume = new JEditorPane();
+		JTextArea txt_Resume = new JTextArea(film.getResume());
+		txt_Resume.setLineWrap(true);
+		txt_Resume.setWrapStyleWord(true);
 		txt_Resume.setBackground(SystemColor.inactiveCaption);
 		txt_Resume.setBounds(164, 520, 230, 78);
 		panel.add(txt_Resume);
 		
-		JList list_Acteurs = new JList();
+		
+		Vector<ItemJListImplication>listDesScenaristes = new Vector<ItemJListImplication>();
+		Vector<ItemJListImplication>listDesRealisateur = new Vector<ItemJListImplication>();
+		Vector<ItemJListImplication>listDesActeurs = new Vector<ItemJListImplication>();
+		Vector<ItemJListImplication>listDesProducteur = new Vector<ItemJListImplication>();
+		
+		
+		ArrayList<Implication> listImplication = new ArrayList<Implication>();
+		listImplication.addAll(film.getImplications());
+		
+		for(Implication i : listImplication){
+			if(i.getTypepersonne().getTypepersonne().equals("realisateur"))
+				listDesRealisateur.add(new ItemJListImplication(i, i.getPersonne().getPrenom() + " " + i.getPersonne().getNom()));
+			else if(i.getTypepersonne().getTypepersonne().equals("scenariste"))
+				listDesScenaristes.add(new ItemJListImplication(i, i.getPersonne().getPrenom() + " " + i.getPersonne().getNom()));
+			else if(i.getTypepersonne().getTypepersonne().equals("acteur"))
+				listDesActeurs.add(new ItemJListImplication(i, i.getPersonne().getPrenom() + " " + i.getPersonne().getNom()));
+			else if(i.getTypepersonne().getTypepersonne().equals("producteur"))
+				listDesProducteur.add(new ItemJListImplication(i, i.getPersonne().getPrenom() + " " + i.getPersonne().getNom()));
+		}
+		
+		final JList list_Acteurs = new JList(listDesActeurs);
+		list_Acteurs.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ItemJListImplication item = (ItemJListImplication)list_Acteurs.getSelectedValue();
+				infoPersonne = new InformationPersonne(item.getImpilication());
+				infoPersonne.setVisible(true);
+			}
+		});
+		list_Acteurs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Acteurs.setBackground(SystemColor.inactiveCaption);
 		list_Acteurs.setBounds(164, 456, 230, 53);
 		panel.add(list_Acteurs);
 		
-		JList list_Scenaristes = new JList();
+		final JList list_Scenaristes = new JList(listDesScenaristes);
+		list_Scenaristes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ItemJListImplication item = (ItemJListImplication)list_Scenaristes.getSelectedValue();
+				Implication imp = item.getImpilication();
+				Facade.getFacade().initHibernateFilm(imp);
+				infoPersonne = new InformationPersonne(imp);
+				infoPersonne.setVisible(true);
+			}
+		});
+		list_Scenaristes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Scenaristes.setBackground(SystemColor.inactiveCaption);
 		list_Scenaristes.setBounds(164, 392, 230, 53);
 		panel.add(list_Scenaristes);
 		
-		JList list_Genres = new JList();
+		Vector<String>listDesGenre = new Vector<String>();
+		ArrayList<Genre> listGenre = new ArrayList<Genre>();
+		listGenre.addAll(film.getGenres());
+		for(Genre g : listGenre){
+			listDesGenre.add(g.getLibellegenre());
+		}
+		JList list_Genres = new JList(listDesGenre);
+		list_Genres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Genres.setBackground(SystemColor.inactiveCaption);
 		list_Genres.setBounds(164, 258, 230, 53);
+		list_Genres.setAutoscrolls(true);
 		panel.add(list_Genres);
 		
-		JList list_1 = new JList();
-		list_1.setBackground(SystemColor.inactiveCaption);
-		list_1.setBounds(164, 120, 230, 53);
-		panel.add(list_1);
+		Vector<String>listDesPays = new Vector<String>();
+		ArrayList<Pays> listPays = new ArrayList<Pays>();
+		listPays.addAll(film.getPayses());
+		for(Pays p : listPays){
+			listDesPays.add(p.getNompays());
+		}
+		JList list_pays = new JList(listDesPays);
+		list_pays.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list_pays.setBackground(SystemColor.inactiveCaption);
+		list_pays.setBounds(164, 120, 230, 53);
+		panel.add(list_pays);
 		
-		JList list_Realisateur = new JList();
+		final JList list_Realisateur = new JList(listDesRealisateur);
+		list_Realisateur.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ItemJListImplication item = (ItemJListImplication)list_Realisateur.getSelectedValue();
+				infoPersonne = new InformationPersonne(item.getImpilication());
+				infoPersonne.setVisible(true);
+			}
+		});
+		list_Realisateur.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Realisateur.setBackground(SystemColor.inactiveCaption);
 		list_Realisateur.setBounds(164, 324, 230, 53);
 		panel.add(list_Realisateur);
+		
+		JButton btnImage = new JButton("Image");
+		//http://stackoverflow.com/questions/10967451/open-a-link-in-browser-with-java-button
+		btnImage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+			    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+			        try {
+			            desktop.browse(URI.create(film.getImage()));
+			        } catch (Exception ee) {
+			            ee.printStackTrace();
+			        }
+			    }
+			}
+		});
+		btnImage.setFont(new Font("Verdana", Font.BOLD, 13));
+		btnImage.setBounds(445, 48, 124, 36);
+		panel.add(btnImage);
+		
+		JLabel lblAnnounce = new JLabel("Announce :");
+		lblAnnounce.setBounds(445, 131, 89, 14);
+		panel.add(lblAnnounce);
+		
+		Vector<String>listDesAnnounce = new Vector<String>();
+		ArrayList<Annonce> listAnnonce = new ArrayList<Annonce>();
+		listAnnonce.addAll(film.getAnnonces());
+		for(Annonce a : listAnnonce){
+			listDesAnnounce.add(a.getAnnounce());
+		}
+		final JList list_Announce = new JList(listDesAnnounce);
+		list_Announce.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list_Announce.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+			    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE) && !list_Announce.isSelectionEmpty()) {
+			        try {
+			            desktop.browse(URI.create( (String)list_Announce.getSelectedValue() ));
+			        } catch (Exception ee) {
+			            ee.printStackTrace();
+			        }
+			    }
+			}
+		});
+		list_Announce.setBackground(SystemColor.inactiveCaption);
+		list_Announce.setBounds(445, 156, 211, 90);
+		list_Announce.setAutoscrolls(true);
+		panel.add(list_Announce);
+		
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.Component;
@@ -92,6 +93,7 @@ public class ListFilmLouer extends JFrame {
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setBackground(SystemColor.menu);
 		list.setBounds(22, 56, 571, 306);
+		list.setAutoscrolls(true);
 		panel.add(list);
 		
 		JButton btn_RemoveSelected = new JButton("Enlever Film Selectionner");
@@ -101,7 +103,7 @@ public class ListFilmLouer extends JFrame {
 					showErrorMessage("Aucun film selectionner.");
 				}
 				else{
-					list.remove(list.getSelectedIndex());
+					//list.remove(list.getSelectedIndex());
 					louerControlleur.enleverFilm(list.getSelectedIndex());
 				}
 			}
@@ -122,12 +124,15 @@ public class ListFilmLouer extends JFrame {
 	}
 	
 	public void clearList(){
-		list.removeAll();
+		listModel.removeAllElements();
 		listModel.clear();
+		list.removeAll();
+		list.setListData(listModel);
 	}
 	
 	public void addFilm(String name){
 		listModel.addElement(name);
+		list.removeAll();
 		list.setListData(listModel);
 	}
 	
