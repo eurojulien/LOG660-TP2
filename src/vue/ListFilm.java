@@ -16,6 +16,7 @@ import javax.swing.JList;
 import controlleur.RechercheFilmCont;
 import javax.swing.ListSelectionModel;
 import java.util.Vector;
+import javax.swing.JScrollPane;
 
 public class ListFilm extends JFrame {
 
@@ -82,12 +83,6 @@ public class ListFilm extends JFrame {
 		panel.add(btn_Annuler);
 		
 		listModel = new Vector<String>();
-		list = new JList(listModel);
-		list.setSelectedIndex(0);
-		list.setVisibleRowCount(24);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBackground(SystemColor.menu);
-		list.setBounds(22, 56, 571, 359);
 		
 		
 		JButton btn_Louer = new JButton("Louer");
@@ -104,7 +99,15 @@ public class ListFilm extends JFrame {
 		btn_Louer.setFont(new Font("Verdana", Font.BOLD, 13));
 		btn_Louer.setBounds(221, 426, 107, 44);
 		
-		panel.add(list);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(22, 56, 571, 359);
+		panel.add(scrollPane);
+		list = new JList(listModel);
+		scrollPane.setViewportView(list);
+		list.setSelectedIndex(0);
+		list.setVisibleRowCount(24);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.setBackground(SystemColor.menu);
 		panel.add(btn_Louer);
 		
 		JButton btnFicheFilm = new JButton("Fiche Film");

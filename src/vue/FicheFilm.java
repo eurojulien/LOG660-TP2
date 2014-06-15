@@ -36,6 +36,7 @@ import modele.Annonce;
 import modele.Genre;
 import modele.Implication;
 import modele.Pays;
+import javax.swing.JScrollPane;
 
 
 public class FicheFilm extends JFrame {
@@ -226,7 +227,12 @@ public class FicheFilm extends JFrame {
 				listDesProducteur.add(new ItemJListImplication(i, i.getPersonne().getPrenom() + " " + i.getPersonne().getNom()));
 		}
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(164, 456, 230, 53);
+		panel.add(scrollPane);
+		
 		final JList list_Acteurs = new JList(listDesActeurs);
+		scrollPane.setViewportView(list_Acteurs);
 		list_Acteurs.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -237,10 +243,13 @@ public class FicheFilm extends JFrame {
 		});
 		list_Acteurs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Acteurs.setBackground(SystemColor.inactiveCaption);
-		list_Acteurs.setBounds(164, 456, 230, 53);
-		panel.add(list_Acteurs);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(164, 392, 230, 53);
+		panel.add(scrollPane_1);
 		
 		final JList list_Scenaristes = new JList(listDesScenaristes);
+		scrollPane_1.setViewportView(list_Scenaristes);
 		list_Scenaristes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -253,8 +262,6 @@ public class FicheFilm extends JFrame {
 		});
 		list_Scenaristes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Scenaristes.setBackground(SystemColor.inactiveCaption);
-		list_Scenaristes.setBounds(164, 392, 230, 53);
-		panel.add(list_Scenaristes);
 		
 		Vector<String>listDesGenre = new Vector<String>();
 		ArrayList<Genre> listGenre = new ArrayList<Genre>();
@@ -262,12 +269,15 @@ public class FicheFilm extends JFrame {
 		for(Genre g : listGenre){
 			listDesGenre.add(g.getLibellegenre());
 		}
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(164, 258, 230, 53);
+		panel.add(scrollPane_3);
 		JList list_Genres = new JList(listDesGenre);
+		scrollPane_3.setViewportView(list_Genres);
 		list_Genres.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Genres.setBackground(SystemColor.inactiveCaption);
-		list_Genres.setBounds(164, 258, 230, 53);
 		list_Genres.setAutoscrolls(true);
-		panel.add(list_Genres);
 		
 		Vector<String>listDesPays = new Vector<String>();
 		ArrayList<Pays> listPays = new ArrayList<Pays>();
@@ -275,13 +285,21 @@ public class FicheFilm extends JFrame {
 		for(Pays p : listPays){
 			listDesPays.add(p.getNompays());
 		}
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(164, 120, 230, 53);
+		panel.add(scrollPane_4);
 		JList list_pays = new JList(listDesPays);
+		scrollPane_4.setViewportView(list_pays);
 		list_pays.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_pays.setBackground(SystemColor.inactiveCaption);
-		list_pays.setBounds(164, 120, 230, 53);
-		panel.add(list_pays);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(164, 324, 230, 53);
+		panel.add(scrollPane_2);
 		
 		final JList list_Realisateur = new JList(listDesRealisateur);
+		scrollPane_2.setViewportView(list_Realisateur);
 		list_Realisateur.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -292,8 +310,6 @@ public class FicheFilm extends JFrame {
 		});
 		list_Realisateur.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Realisateur.setBackground(SystemColor.inactiveCaption);
-		list_Realisateur.setBounds(164, 324, 230, 53);
-		panel.add(list_Realisateur);
 		
 		JButton btnImage = new JButton("Image");
 		//http://stackoverflow.com/questions/10967451/open-a-link-in-browser-with-java-button

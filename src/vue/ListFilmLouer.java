@@ -25,6 +25,7 @@ import javax.swing.JList;
 import controlleur.LouerControlleur;
 
 import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
 
 public class ListFilmLouer extends JFrame {
 
@@ -89,12 +90,15 @@ public class ListFilmLouer extends JFrame {
 		panel.add(btn_Annuler);
 		
 		listModel = new Vector<String>();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(22, 56, 571, 306);
+		panel.add(scrollPane);
 		list = new JList(listModel);
+		scrollPane.setViewportView(list);
 		list.setBorder(new LineBorder(new Color(0, 0, 0)));
 		list.setBackground(SystemColor.menu);
-		list.setBounds(22, 56, 571, 306);
 		list.setAutoscrolls(true);
-		panel.add(list);
 		
 		JButton btn_RemoveSelected = new JButton("Enlever Film Selectionner");
 		btn_RemoveSelected.addActionListener(new ActionListener() {
