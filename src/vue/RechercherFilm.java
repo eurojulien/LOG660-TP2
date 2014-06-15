@@ -95,7 +95,15 @@ public class RechercherFilm extends JFrame {
 				  Item item = (Item)comboBox_Pays.getSelectedItem();
 			      //System.out.println( item.getId() + " : " + item.getDescription() );
 			      //rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText(), null/*comboBox_Langue.getSelectedItem().toString()*/);
-			      rechercheFilmCont.rechercheFilmFonctionAwesome(txtNomFilm.getText(), null, null, 0, null, null, null, null);
+				  Item itempays = (Item)comboBox_Pays.getSelectedItem();
+			      rechercheFilmCont.rechercheFilmFonctionAwesome(txtNomFilm.getText(), 
+			    		  											itempays.getDescription(), 
+			    		  											(String)comboBox_Langue.getSelectedItem(), 
+			    		  											(String)comboBox_Genre.getSelectedItem(), 
+			    		  											txt_Realisateur.getText(), 
+			    		  											txt_Acteur.getText(), 
+			    		  											txtDateDebut.getText(), 
+			    		  											txtDateFin.getText());
 			}
 		});
 		btn_Rechercher.setBounds(57, 437, 117, 44);

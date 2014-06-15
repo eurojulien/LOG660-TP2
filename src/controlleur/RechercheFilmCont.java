@@ -157,19 +157,37 @@ public class RechercheFilmCont {
 	public void rechercheFilmFonctionAwesome(String titre,
 												String pays,
 												String langue, 
-												int idGenre,
+												String genre,
 												String realisateur,
-												String Acteur,
-												Date after, 
-												Date before){
+												String acteur,
+												String after, 
+												String before){
 		
-		String queryString = "SELECT idfilm FROM film WHERE ";
-		if(titre != null)
-			queryString= queryString + "titre LIKE '%" + titre + "%' ";
-		//etc.....
+		String queryString = "SELECT DISTINCT idfilm FROM vue_film WHERE ";
+		Vector<String> autreTruc = new Vector<String>();
+		if(!titre.equals(""))
+			autreTruc.add("titre LIKE '%" + titre + "%' ");
+		if(!pays.equals(""))
+			autreTruc.add("nompays LIKE '%" + pays + "%' ");
+		if(!langue.equals(""))
+			autreTruc.add("langue LIKE '%" + langue + "%' ");
+		if(!genre.equals(""))
+			autreTruc.add("libellegenre LIKE '%" + genre + "%' ");
+		if(!realisateur.equals(""))
+			autreTruc.add("typepersonne = 'realisateur' and nomprenom LIKE '%" + realisateur + "%' ");
+		if(!acteur.equals(""))
+			autreTruc.add("typepersonne = 'acteur' and nomprenom LIKE '%" + acteur + "%' ");
+		if(!after.equals(""))
+			autreTruc.add("anneesortie >= " + Integer.parseInt(after)+ " ");
+		if(!before.equals(""))
+			autreTruc.add("anneesortie <= " + Integer.parseInt(before)+ " ");
 		
-		
-		
+		for(int i = 0; i < autreTruc.size(); i++){
+			queryString = queryString + autreTruc.get(i);
+			if(autreTruc.size()-1 != i)
+				queryString = queryString + "and ";
+		}
+		System.out.println(queryString);
 		ArrayList<BigDecimal> listIdFilm = Facade.getFacade().normalSQLSelect(queryString);
 		
 		listFilmGui.clearList();
