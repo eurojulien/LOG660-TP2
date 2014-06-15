@@ -339,7 +339,12 @@ public class FicheFilm extends JFrame {
 		for(Annonce a : listAnnonce){
 			listDesAnnounce.add(a.getAnnounce());
 		}
+		
+		JScrollPane scrollPane_5 = new JScrollPane();
+		scrollPane_5.setBounds(445, 156, 211, 90);
+		panel.add(scrollPane_5);
 		final JList list_Announce = new JList(listDesAnnounce);
+		scrollPane_5.setViewportView(list_Announce);
 		list_Announce.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list_Announce.addMouseListener(new MouseAdapter() {
 			@Override
@@ -355,9 +360,7 @@ public class FicheFilm extends JFrame {
 			}
 		});
 		list_Announce.setBackground(SystemColor.inactiveCaption);
-		list_Announce.setBounds(445, 156, 211, 90);
 		list_Announce.setAutoscrolls(true);
-		panel.add(list_Announce);
 		
 	}
 }
