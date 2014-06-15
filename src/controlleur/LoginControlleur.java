@@ -52,7 +52,7 @@ public class LoginControlleur{
 		
 		if(!users.isEmpty()){
 			user = users.get(0);
-			System.out.println("Forfait: " + user.getForfait().getNom());
+			//System.out.println("Forfait: " + user.getForfait().getNom());
 			hideGui(); //hide the login screen
 			menuControlleur = new MenuControlleur(this);
 			menuControlleur.showGui(); //show the main menu

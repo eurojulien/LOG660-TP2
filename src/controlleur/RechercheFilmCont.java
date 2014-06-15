@@ -1,8 +1,8 @@
 package controlleur;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Vector;
 
 import modele.*;
@@ -28,9 +28,8 @@ public class RechercheFilmCont {
 		
 		loadPays();
 		loadGenre();
-		//loadlangue();
-		//loadActeurs();
-//		loadRealisateur();
+		loadlangue();
+
 	}
 
 	public void showGuiRecherche() {
@@ -124,67 +123,80 @@ public class RechercheFilmCont {
 
 	}
 
-	public void rechercheFilmParTitre(String titre, String langue){
+	public void rechercheFilmParTitre(String titre){
 		listFilmGui.clearList();
 		
 		Facade f = Facade.getFacade();
 		
 		filmResltat = (ArrayList<Film>) f.getObjects(Film.class, 
-										"titre LIKE '%" + titre + "%'"/*, 
-										"langue = '" + langue + "'"*/);
+										"titre LIKE '%" + titre + "%'");
 		if(filmResltat.isEmpty())
 			rechercherFilmGui.showErrorMessage("Aucun film trouver.");
 		else{
 			for(Film film: filmResltat){
 				listFilmGui.addFilm(film.getTitre());	
 			}
+			listFilmGui.clearList();
 			hideGuiRecherche();
 			showGuiResultat();
 		}
 
 	}
 	
+	public Film rechercheFilmParId(BigDecimal idfilm){
+		listFilmGui.clearList();
+		
+		Facade f = Facade.getFacade();
+		
+		ArrayList<Film> filmRecu = (ArrayList<Film>) f.getObjects(Film.class, 
+										"idfilm = " + idfilm );
+
+		return filmRecu.get(0);
+	}
+	
+	public void rechercheFilmFonctionAwesome(String titre,
+												String pays,
+												String langue, 
+												int idGenre,
+												String realisateur,
+												String Acteur,
+												Date after, 
+												Date before){
+		
+		String queryString = "SELECT idfilm FROM film WHERE ";
+		if(titre != null)
+			queryString= queryString + "titre LIKE '%" + titre + "%' ";
+		//etc.....
+		
+		
+		
+		ArrayList<BigDecimal> listIdFilm = Facade.getFacade().normalSQLSelect(queryString);
+		
+		listFilmGui.clearList();
+		filmResltat.clear();
+		
+		if(listIdFilm.isEmpty())
+			rechercherFilmGui.showErrorMessage("Aucun film trouver.");
+		else{
+			for(BigDecimal s : listIdFilm){
+				Film f = rechercheFilmParId(s);
+				if(f != null)
+					filmResltat.add(f);
+			}
+			if(!filmResltat.isEmpty()){
+				for(Film film: filmResltat){
+					listFilmGui.addFilm(film.getTitre());	
+				}
+				hideGuiRecherche();
+				showGuiResultat();
+			}
+
+		}
+		
+	}
+	
 	public void affichierFicheFilm(int index){
 		Film film = filmResltat.get(index);
-		//Juste un test pour voir si tous fonctionne
-		/*
-		System.out.println("Film :" + film.getTitre());
-		System.out.println("Langue :" + film.getLangue());
-		System.out.println("Image :" + film.getImage());
-		System.out.println("Resume :" + film.getResume());
-		System.out.println("Anneesortie :" + film.getAnneesortie());
-		System.out.println("Duree :" + film.getDuree());
-		System.out.println("Idfilm :" + film.getIdfilm());
-	
-		
-		ArrayList<Annonce> listAnnonce = new ArrayList<Annonce>();
-		listAnnonce.addAll(film.getAnnonces());
-		for(Annonce a : listAnnonce){
-			System.out.println("Annonce :" + a.getAnnounce());
-		}
-		
-		ArrayList<Genre> listGenre = new ArrayList<Genre>();
-		listGenre.addAll(film.getGenres());
-		for(Genre g : listGenre){
-			System.out.println("Genre :" + g.getLibellegenre());
-		}
-		
-		ArrayList<Pays> listPays = new ArrayList<Pays>();
-		listPays.addAll(film.getPayses());
-		for(Pays p : listPays){
-			System.out.println("Genre :" + p.getNompays());
-		}
-		
-		ArrayList<Implication> listImp = new ArrayList<Implication>();
-		listImp.addAll(film.getImplications());
-		for(Implication i : listImp){
-			System.out.println("Type Personne: " + i.getTypepersonne().getTypepersonne());
-			System.out.println("Nom :" + i.getPersonne().getPrenom() + " " + i.getPersonne().getNom());
-			if(i.getPersonne().getDatedenaissance() != null)
-				System.out.println("DateAnniv. :" + i.getPersonne().getDatedenaissance().toString());
-			System.out.println("Personnage: " + i.getPersonnage());
-		}
-		*/
 		hideGuiResultat();
 		ficheFilmGui = new FicheFilm(this, film);
 		ficheFilmGui.setVisible(true);
@@ -203,7 +215,9 @@ public class RechercheFilmCont {
 		Vector model = null;
 		ArrayList<Pays> pays = (ArrayList<Pays>) f.getAllObjects(Pays.class);
 		
-		//rechercherFilmGui.addPays("");
+		model = new Vector();
+        model.addElement( new Item(0, "" ) );
+		rechercherFilmGui.addPays(model);
 		for (Pays p : pays){
 	     	model = new Vector();
 	        model.addElement( new Item(p.getIdpays().intValue(), p.getNompays() ) );
@@ -215,44 +229,26 @@ public class RechercheFilmCont {
 	public void loadGenre(){
 		
 		Facade f = Facade.getFacade();
-		ArrayList<Genre> genres = (ArrayList<Genre>) f.getAllObjects(Genre.class);
 		
+		Vector model = null;
+		ArrayList<Genre> genres = (ArrayList<Genre>) f.getAllObjects(Genre.class);
 		rechercherFilmGui.addGenre("");
 		for (Genre g : genres){
+			model = new Vector();
+			model.addElement( new Item(g.getIdgenre().intValue(), g.getLibellegenre()));
 			rechercherFilmGui.addGenre(g.getLibellegenre());
 		}
 	}
 	
 	public void loadlangue(){
-		
+
+		String query = "SELECT DISTINCT langue FROM film";
 		Facade f = Facade.getFacade();
-		ArrayList<Film> films = (ArrayList<Film>) f.getAllObjects(Film.class);
 		
+		ArrayList<String> listLangue = f.normalSQLSelect(query);
 		rechercherFilmGui.addLangue("");
-		for (Film fi : films){
-			rechercherFilmGui.addLangue(fi.getLangue());
-		}
-	}
-	
-	public void loadActeurs(){
-		
-		Facade f = Facade.getFacade();
-		ArrayList<Personne> personnes = (ArrayList<Personne>) f.getAllObjects(Personne.class);
-		
-		rechercherFilmGui.addActeur("");
-		for (Personne p : personnes){
-			rechercherFilmGui.addActeur(p.getNom());
-		}
-	}
-	
-	public void loadRealisateur(){
-		
-		Facade f = Facade.getFacade();
-		ArrayList<Personne> personnes = (ArrayList<Personne>) f.getAllObjects(Personne.class);
-		
-		rechercherFilmGui.addRealisateur("");
-		for (Personne p : personnes){
-			rechercherFilmGui.addRealisateur(p.getNom());
+		for (String s : listLangue){
+			rechercherFilmGui.addLangue(s);
 		}
 	}
 	

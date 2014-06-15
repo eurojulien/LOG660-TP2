@@ -151,6 +151,15 @@ public class Facade<T> {
 		return objects;
 	}
 	
+	public ArrayList<String> normalSQLSelect(String queryString){
+		ArrayList<String> results = new ArrayList<String>();
+		
+		Query query = session.createSQLQuery(queryString);
+		results = (ArrayList<String>) query.list();
+		
+		return results;
+	}
+	
 	public void closeSessionForExit(){
 		session.close();
 		sessionFactory.close();

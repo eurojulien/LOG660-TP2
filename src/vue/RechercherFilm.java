@@ -7,11 +7,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JPasswordField;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
@@ -40,8 +45,8 @@ public class RechercherFilm extends JFrame {
 	private JTextField txtDateFin;
 	private JComboBox comboBox_Pays;
 	private JComboBox comboBox_Genre;
-	private JComboBox comboBox_Realisateur;
-	private JComboBox comboBox_Acteur;
+	private JTextField txt_Realisateur;
+	private JTextField txt_Acteur;
 	private JComboBox comboBox_Langue;
 
 	private RechercheFilmCont rechercheFilmCont;
@@ -69,16 +74,6 @@ public class RechercherFilm extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		
-		JButton btn_initialiser = new JButton("Initialiser");
-		btn_initialiser.setEnabled(false);
-		btn_initialiser.setBounds(235, 437, 107, 44);
-		btn_initialiser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		btn_initialiser.setFont(new Font("Verdana", Font.BOLD, 13));
-		
 		Label label = new Label("Rechercher Film");
 		label.setBounds(0, 10, 528, 22);
 		label.setAlignment(Label.CENTER);
@@ -98,8 +93,9 @@ public class RechercherFilm extends JFrame {
 		btn_Rechercher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  Item item = (Item)comboBox_Pays.getSelectedItem();
-			        System.out.println( item.getId() + " : " + item.getDescription() );
-				rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText(), null/*comboBox_Langue.getSelectedItem().toString()*/);
+			      //System.out.println( item.getId() + " : " + item.getDescription() );
+			      //rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText(), null/*comboBox_Langue.getSelectedItem().toString()*/);
+			      rechercheFilmCont.rechercheFilmFonctionAwesome(txtNomFilm.getText(), null, null, 0, null, null, null, null);
 			}
 		});
 		btn_Rechercher.setBounds(57, 437, 117, 44);
@@ -112,7 +108,6 @@ public class RechercherFilm extends JFrame {
 		panel.add(label);
 		panel.add(btn_Rechercher);
 		panel.add(btnAnnuler);
-		panel.add(btn_initialiser);
 		panel.add(btn_Annuler);
 		
 		JLabel lblNomFilm = new JLabel("Nom Film :");
@@ -134,11 +129,11 @@ public class RechercherFilm extends JFrame {
 		panel.add(lblIntervalleAnnes);
 		
 		JLabel lblPaysDeProduction = new JLabel("Pays de production :");
-		lblPaysDeProduction.setBounds(90, 167, 107, 19);
+		lblPaysDeProduction.setBounds(90, 167, 122, 19);
 		panel.add(lblPaysDeProduction);
 		
 		JLabel lblLangueOriginale = new JLabel("Langue originale:");
-		lblLangueOriginale.setBounds(90, 217, 84, 19);
+		lblLangueOriginale.setBounds(90, 217, 122, 19);
 		panel.add(lblLangueOriginale);
 		
 		JLabel lblGenre = new JLabel("Genre :");
@@ -150,16 +145,16 @@ public class RechercherFilm extends JFrame {
 		txtDateFin.setBounds(368, 117, 98, 20);
 		panel.add(txtDateFin);
 		
-		JLabel lblRalisateur = new JLabel("Réalisateur:");
-		lblRalisateur.setBounds(90, 321, 84, 19);
-		panel.add(lblRalisateur);
+		JLabel lblRealisateur = new JLabel("Réalisateur:");
+		lblRealisateur.setBounds(90, 321, 122, 19);
+		panel.add(lblRealisateur);
 		
 		JLabel lblActeur = new JLabel("Acteur :");
 		lblActeur.setBounds(90, 361, 84, 19);
 		panel.add(lblActeur);
 		
 		JLabel lblEt = new JLabel("et");
-		lblEt.setBounds(329, 120, 54, 19);
+		lblEt.setBounds(329, 120, 38, 19);
 		panel.add(lblEt);
 		
 		comboBox_Pays = new JComboBox();
@@ -170,19 +165,15 @@ public class RechercherFilm extends JFrame {
 		comboBox_Genre.setBounds(224, 274, 144, 20);
 		panel.add(comboBox_Genre);
 		
-		comboBox_Realisateur = new JComboBox();
-		comboBox_Realisateur.setBounds(222, 320, 146, 20);
-		panel.add(comboBox_Realisateur);
+		txt_Realisateur = new JTextField();
+		txt_Realisateur.setBounds(222, 320, 146, 20);
+		panel.add(txt_Realisateur);
 		
-		comboBox_Acteur = new JComboBox();
-		comboBox_Acteur.setBounds(222, 360, 146, 20);
-		panel.add(comboBox_Acteur);
+		txt_Acteur = new JTextField();
+		txt_Acteur.setBounds(222, 360, 146, 20);
+		panel.add(txt_Acteur);
 		
 		comboBox_Langue = new JComboBox();
-		//No hard coding! :P
-		//comboBox_Langue.addItem("");
-		//comboBox_Langue.addItem("English");
-		//comboBox_Langue.addItem("Italian");
 		comboBox_Langue.setBounds(222, 216, 144, 20);
 		panel.add(comboBox_Langue);
 
@@ -205,12 +196,4 @@ public class RechercherFilm extends JFrame {
 		comboBox_Langue.addItem(langue);
 	}
 	
-	
-	public void addRealisateur(String realisateur){
-		comboBox_Realisateur.addItem(realisateur);
-	}
-	
-	public void addActeur(String acteur){
-		comboBox_Acteur.addItem(acteur);
-	}
 }

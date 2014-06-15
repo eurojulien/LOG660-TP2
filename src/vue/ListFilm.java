@@ -124,8 +124,10 @@ public class ListFilm extends JFrame {
 	}
 	
 	public void clearList(){
-		list.removeAll();
+		listModel.removeAllElements();
 		listModel.clear();
+		list.removeAll();
+		list.setListData(listModel);
 	}
 	
 	public void addFilm(String name){
