@@ -7,17 +7,25 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JPasswordField;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
+
+
+
+//import Controleur.Authentification;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Label;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.GroupLayout;
@@ -27,7 +35,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import javax.swing.border.BevelBorder;
 
-import controlleur.Item;
 import modele.Pays;
 import controlleur.Facade;
 import controlleur.RechercheFilmCont;
@@ -97,9 +104,7 @@ public class RechercherFilm extends JFrame {
 		JButton btn_Rechercher = new JButton("Rechecher");
 		btn_Rechercher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  Item item = (Item)comboBox_Pays.getSelectedItem();
-			        System.out.println( item.getId() + " : " + item.getDescription() );
-				rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText(), null/*comboBox_Langue.getSelectedItem().toString()*/);
+				rechercheFilmCont.rechercheFilmParTitre(txtNomFilm.getText(), comboBox_Langue.getSelectedItem().toString());
 			}
 		});
 		btn_Rechercher.setBounds(57, 437, 117, 44);
@@ -179,10 +184,9 @@ public class RechercherFilm extends JFrame {
 		panel.add(comboBox_Acteur);
 		
 		comboBox_Langue = new JComboBox();
-		//No hard coding! :P
-		//comboBox_Langue.addItem("");
-		//comboBox_Langue.addItem("English");
-		//comboBox_Langue.addItem("Italian");
+		comboBox_Langue.addItem("");
+		comboBox_Langue.addItem("English");
+		comboBox_Langue.addItem("Italian");
 		comboBox_Langue.setBounds(222, 216, 144, 20);
 		panel.add(comboBox_Langue);
 
@@ -193,8 +197,8 @@ public class RechercherFilm extends JFrame {
 	}
 	
 	
-	public void addPays(Vector pays){
-		comboBox_Pays.addItem(pays.remove(0));
+	public void addPays(String pays){
+		comboBox_Pays.addItem(pays);
 	}
 	
 	public void addGenre(String genre){

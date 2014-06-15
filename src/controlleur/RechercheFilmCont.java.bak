@@ -1,9 +1,7 @@
 package controlleur;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 
 import modele.*;
 import vue.FicheFilm;
@@ -30,7 +28,7 @@ public class RechercheFilmCont {
 		loadGenre();
 		//loadlangue();
 		//loadActeurs();
-//		loadRealisateur();
+		//loadRealisateur();
 	}
 
 	public void showGuiRecherche() {
@@ -166,24 +164,15 @@ public class RechercheFilmCont {
 		ficheFilmGui.setVisible(true);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void loadPays(){
 		
 		Facade f = Facade.getFacade();
-		
-		Vector model = null;
 		ArrayList<Pays> pays = (ArrayList<Pays>) f.getAllObjects(Pays.class);
 		
-		//rechercherFilmGui.addPays("");
+		rechercherFilmGui.addPays("");
 		for (Pays p : pays){
-	     	model = new Vector();
-	        model.addElement( new Item(p.getIdpays().intValue(), p.getNompays() ) );
-	        rechercherFilmGui.addPays(model);
+			rechercherFilmGui.addPays(p.getNompays());
 		}
-		
-
-			
-
 	}
 	
 	public void loadGenre(){
