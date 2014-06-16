@@ -118,7 +118,7 @@ public class FicheFilm extends JFrame {
 		btn_Annuler.setBounds(589, 410, 107, 44);
 		btn_Annuler.setFont(new Font("Verdana", Font.BOLD, 13));
 		
-		JButton btn_Rechercher = new JButton("Loyer");
+		JButton btn_Rechercher = new JButton("Louer");
 		btn_Rechercher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				rechercheFilmCont.addLoction(film);
